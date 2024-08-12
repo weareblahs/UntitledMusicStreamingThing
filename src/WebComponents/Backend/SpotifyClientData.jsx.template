@@ -1,0 +1,20 @@
+// NOTE: client ID and client secret can be obtained when you create
+// a new app via Spotify Developers (developer.spotify.com). Please
+// make sure that the redirect URI is set to "http://localhost:5173/loginAuth"
+// and the APIs used are web playback SDK and web API
+
+export const spotifyProperties = (property) => {
+  if (property == "clientID") {
+    // put your own client ID here
+    return "";
+  }
+  if (property == "clientSecret") {
+    // put your own client secret here
+    return "";
+  } else {
+    if (!property) {
+      console.log("No data specified");
+    }
+    return "Invalid property provided. Check console for details.";
+  }
+};
