@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Radio Canada Big", sans-serif;
+}
+.center-everything {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  min-height: 100vh;
+  background-size: cover;
+}
