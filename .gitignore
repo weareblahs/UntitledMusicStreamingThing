@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # spotify client data
-src/Backend/spotifyClientData.jsx
+src/WebComponents/Backend/spotifyClientData.jsx
