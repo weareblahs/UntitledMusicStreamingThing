@@ -36,16 +36,16 @@ export const ViewAlbum = ({ setPage }) => {
         <div className="ms-4 mt-auto mb-auto">
           <h1 className="text-6xl">{ad?.name}</h1>
           <h1 className="text-3xl">{ad?.artists?.[0].name}</h1>
-          <p>
-            {ad?.label} / {ad?.release_date}
-          </p>
+          <p>{`${ad?.label} / ${ad?.release_date}`}</p>
           <div className="pt-2">
-            <Button
-              onClick={() => PlaySpotifyAlbum(ad?.uri, Cookies.get("did"))}
-            >
-              <FaPlay />
-              Play album
-            </Button>
+            {!ad ? null : (
+              <Button
+                onClick={() => PlaySpotifyAlbum(ad?.uri, Cookies.get("did"))}
+              >
+                <FaPlay />
+                Play album
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -68,8 +68,12 @@ export const ViewAlbum = ({ setPage }) => {
                 {Track.name}
               </div>
               <div className="ms-4 col-span-4 mt-auto mb-auto text-sm">
-                {Track.artists.map((Artist) => {
-                  return `${Artist.name}, `;
+                {Track.artists.map((Artist, i, row) => {
+                  if (i + 1 === row.length) {
+                    return `${Artist.name}`;
+                  } else {
+                    return `${Artist.name}, `;
+                  }
                 })}
               </div>
               <div className="ms-4 col-span-1 mt-auto mb-auto text-sm text-end trackText">
