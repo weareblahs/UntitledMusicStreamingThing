@@ -5,7 +5,7 @@ import {
   PlaySpotifyMusic,
   SearchAlbum,
 } from "../Backend/SpotifyAPIActions";
-import { Button, ButtonGroup, Image } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import { FaAngleLeft, FaPlay } from "react-icons/fa";
 import { msToMS } from "../Backend/ExtraCode";
 import Cookies from "js-cookie";
@@ -46,6 +46,9 @@ export const ViewAlbum = ({ setPage }) => {
                 Play album
               </Button>
             )}
+            <Chip className="text-black bg-green-500 ms-4">
+              Album from Spotify
+            </Chip>
           </div>
         </div>
       </div>
@@ -65,7 +68,12 @@ export const ViewAlbum = ({ setPage }) => {
                 )}
               </div>
               <div className="ms-4 col-span-6 mt-auto mb-auto text-xl">
-                {Track.name}
+                {Track.name}{" "}
+                <span>
+                  {Track.explicit ? (
+                    <Chip className="rounded-md ms-2">E</Chip>
+                  ) : null}
+                </span>
               </div>
               <div className="ms-4 col-span-4 mt-auto mb-auto text-sm">
                 {Track.artists.map((Artist, i, row) => {
