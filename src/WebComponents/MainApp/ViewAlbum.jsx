@@ -22,7 +22,7 @@ export const ViewAlbum = ({ setPage }) => {
 
   console.log(ad);
   return (
-    <div className="ms-auto me-auto" style={{ width: "80%" }}>
+    <div className="ms-auto me-auto pb-40" style={{ width: "80%" }}>
       <div className="ms-auto me-auto flex sticky mb-4 top-0">
         <Button className="me-2" onClick={() => setPage("search")}>
           <FaAngleLeft /> Back
@@ -90,6 +90,12 @@ export const ViewAlbum = ({ setPage }) => {
             </div>
           );
         })}
+        {/* copyright text */}
+        <div>
+          {ad?.copyrights?.map((Copyright) => {
+            return <div>{Copyright.text}</div>;
+          })}
+        </div>
       </div>
     </div>
   );

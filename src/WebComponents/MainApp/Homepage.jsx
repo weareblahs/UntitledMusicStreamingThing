@@ -9,16 +9,15 @@ export const Homepage = ({ setPage }) => {
           <div className="ms-auto me-auto mt-2" style={{ width: "80%" }}>
             <div className="grid grid-cols-12 gap-4">
               <div
-                className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                className="col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer flex ms-auto me-auto"
                 onClick={() => setPage("search")}
               >
-                <FaSearch />
-                Search library
+                <FaSearch className="me-4" /> Search library
               </div>
-              <div className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer">
+              {/* <div className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer">
                 <FaBook />
                 View my library
-              </div>
+              </div> */}
             </div>
           </div>
           <center>

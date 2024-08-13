@@ -17,6 +17,7 @@ import {
 import { ConnectToDevice } from "../Backend/SpotifyAPIActions";
 import { Seekbar } from "react-seekbar";
 import { msToMS } from "../Backend/ExtraCode";
+import { ViewAlbum } from "../MainApp/ViewAlbum";
 export const PlayWindow = () => {
   const getOAuthToken = useCallback((callback) => {
     const token = Cookies.get("spotifyAccessToken");
@@ -48,7 +49,6 @@ const SpotifyPlayWindow = () => {
     ConnectToDevice(device?.device_id);
   }, [device]);
   if (!playbackState) return null;
-
   return (
     <>
       <div
