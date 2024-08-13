@@ -4,6 +4,7 @@ import { AuthURL } from "../Backend/AuthURLBuilder";
 import { Homepage } from "./Homepage";
 import { PlayWindow } from "../Components/PlaybackControls";
 import { Search } from "./Search";
+import { ViewAlbum } from "./ViewAlbum";
 export const MainWindow = () => {
   const SpotifyTokenExpiry = Cookies.get("spotifyTokenExpiry");
   const [pageName, setPage] = useState("home");
@@ -14,6 +15,7 @@ export const MainWindow = () => {
       <>
         {pageName == "home" ? <Homepage setPage={setPage} /> : null}
         {pageName == "search" ? <Search setPage={setPage} /> : null}
+        {pageName == "viewAlbum" ? <ViewAlbum setPage={setPage} /> : null}
         <PlayWindow />
       </>
     );

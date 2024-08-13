@@ -18,6 +18,7 @@ import {
 import { useState } from "react";
 import { msToMS } from "../Backend/ExtraCode";
 import Cookies from "js-cookie";
+import { ViewAlbum } from "./ViewAlbum";
 
 export const Search = ({ setPage }) => {
   const [sd, setsd] = useState([]);
@@ -54,7 +55,12 @@ export const Search = ({ setPage }) => {
               {sd.spotifyAlbum.albums.items.map((Album) => {
                 return (
                   <Card className="flex-shrink-0 me-4 max-w-[200px] cursor-pointer hover:bg-blue-600 transition fade-in-out">
-                    <CardBody>
+                    <CardBody
+                      onClick={() => {
+                        localStorage.setItem("tempalbumid", Album.id);
+                        setPage("viewAlbum");
+                      }}
+                    >
                       <img src={`${Album.images[0].url}`} width={200} />
                       <div className="block">
                         <h1 className="text-xl overflow-hidden truncate font-bold">

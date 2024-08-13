@@ -1,6 +1,7 @@
 import ky from "ky";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { AuthURL } from "./AuthURLBuilder";
 
 export const ConnectToDevice = (did) => {
   ky.put(`https://api.spotify.com/v1/me/player`, {
@@ -57,4 +58,25 @@ export const PlaySpotifyMusic = async (uri, did) => {
       Authorization: Cookies.get("spotifyAccessHeader"),
     },
   });
+};
+export const PlaySpotifyAlbum = async (uri, did) => {
+  ky.put(`https://api.spotify.com/v1/me/player/play?device_id=${did}`, {
+    json: {
+      context_uri: uri,
+    },
+    headers: {
+      Authorization: Cookies.get("spotifyAccessHeader"),
+    },
+  });
+};
+export const GetAlbum = async (q) => {
+  // 'https://api.spotify.com/v1/search?q=albname&type=album&limit=20'
+  const data = await ky
+    .get(`https://api.spotify.com/v1/albums/${q}`, {
+      headers: {
+        Authorization: Cookies.get("spotifyAccessHeader"),
+      },
+    })
+    .json();
+  return data;
 };
