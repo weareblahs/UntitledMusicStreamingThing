@@ -80,3 +80,14 @@ export const GetAlbum = async (q) => {
     .json();
   return data;
 };
+
+export const GetRecentlyPlayed = async (q) => {
+  const data = await ky
+    .get(`https://api.spotify.com/v1/me/player/recently-played?limit=10`, {
+      headers: {
+        Authorization: Cookies.get("spotifyAccessHeader"),
+      },
+    })
+    .json();
+  return data;
+};

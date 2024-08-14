@@ -46,7 +46,12 @@ export const ViewAlbum = ({ setPage }) => {
                 Play album
               </Button>
             )}
-            <Chip className="text-black bg-green-500 ms-4">
+            <Chip
+              className="text-black bg-green-500 ms-4"
+              onClick={() =>
+                (window.location.href = ad?.external_urls?.spotify)
+              }
+            >
               Album from Spotify
             </Chip>
           </div>
