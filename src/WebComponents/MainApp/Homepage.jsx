@@ -1,4 +1,5 @@
 import { FaSearch, FaBook } from "react-icons/fa";
+import { RecentlyListened } from "./HomeComponents/RecentlyListened";
 
 export const Homepage = ({ setPage }) => {
   return (
@@ -9,7 +10,7 @@ export const Homepage = ({ setPage }) => {
           <div className="ms-auto me-auto mt-2" style={{ width: "80%" }}>
             <div className="grid grid-cols-12 gap-4">
               <div
-                className="col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer flex ms-auto me-auto"
+                className="col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer flex "
                 onClick={() => setPage("search")}
               >
                 <FaSearch className="me-4" /> Search library
@@ -21,7 +22,10 @@ export const Homepage = ({ setPage }) => {
             </div>
           </div>
           <center>
-            <div></div>
+            <div>
+              <h2 className="text-2xl pt-2">Recently Listened</h2>
+              <RecentlyListened />
+            </div>
           </center>
         </div>
       </div>

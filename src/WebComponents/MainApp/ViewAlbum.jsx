@@ -23,7 +23,7 @@ export const ViewAlbum = ({ setPage }) => {
   console.log(ad);
   return (
     <div className="ms-auto me-auto pb-40" style={{ width: "80%" }}>
-      <div className="ms-auto me-auto flex sticky mb-4 top-0">
+      <div className="ms-auto me-auto flex sticky mb-4 top-4">
         <Button className="me-2" onClick={() => setPage("search")}>
           <FaAngleLeft /> Back
         </Button>
