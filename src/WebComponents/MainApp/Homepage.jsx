@@ -1,5 +1,5 @@
 import { FaSearch, FaBook } from "react-icons/fa";
-import { RecentlyListened } from "./HomeComponents/RecentlyListened";
+// import { RecentlyListened } from "./HomeComponents/RecentlyListened";
 
 export const Homepage = ({ setPage }) => {
   return (
@@ -24,7 +24,7 @@ export const Homepage = ({ setPage }) => {
           <center>
             <div>
               <h2 className="text-2xl pt-2">Recently Listened</h2>
-              <RecentlyListened />
+              {/* <RecentlyListened /> */}
             </div>
           </center>
         </div>

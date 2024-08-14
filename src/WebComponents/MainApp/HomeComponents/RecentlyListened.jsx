@@ -22,10 +22,7 @@ export const RecentlyListened = () => {
     >
       {recent?.items?.map((Item) => {
         return (
-          <Card
-            className="mb-3 flex-shrink-0 me-4 max-w-[180px] hover:bg-blue-500 transition fade-in-out cursor-pointer"
-            onClick={() => console.log(Item?.track?.uri)}
-          >
+          <Card className="mb-3 flex-shrink-0 me-4 max-w-[180px] hover:bg-blue-500 transition fade-in-out cursor-pointer">
             <CardBody className="max-w-[250px]">
               <img src={Item?.track?.album?.images?.[0].url} />
               <h1 className="truncate">{Item?.track?.name}</h1>
