@@ -13,10 +13,20 @@ import { FaAngleLeft, FaSpotify } from "react-icons/fa";
 import { AuthURL } from "../Backend/AuthURLBuilder";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-
+import { loginUser, registerUser } from "./LocalAuthentication";
 export const LandingPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState("landing");
+  const [loginInfo, setLoginInfo] = useState([]);
+  const [registerInfo, setRegisterInfo] = useState([]);
+  const [passwordToCompare, setConfirmPassword] = useState("");
+  const notAKeyloggerButItsUsedForLoginPurposes = (e) => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+  };
+  const notAKeyloggerButItsUsedForRegistrationPurposes = (e) => {
+    setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value });
+  };
+  console.log(passwordToCompare);
   return (
     <>
       {page == "landing" ? (
@@ -70,13 +80,19 @@ export const LandingPage = () => {
                 Sign in
               </p>
               <label>Username</label>
-              <Input></Input>
+              <Input
+                name="username"
+                onChange={(e) => notAKeyloggerButItsUsedForLoginPurposes(e)}
+              ></Input>
               <label>Password</label>
-              <Input></Input>
+              <Input
+                name="password"
+                onChange={(e) => notAKeyloggerButItsUsedForLoginPurposes(e)}
+              ></Input>
               <div className="flex ms-auto me-auto mt-2">
                 <Button
                   className="max-w-52 bg-white me-4 text-black text-md font-semibold"
-                  onClick={() => setPage("login")}
+                  onClick={async () => console.log(await loginUser(loginInfo))}
                 >
                   Sign in
                 </Button>
@@ -98,20 +114,42 @@ export const LandingPage = () => {
                 <FaAngleLeft /> Back
               </Button>
               <p className="ms-auto me-auto text-center text-6xl font-semibold mb-4">
-                Sign in
+                Register
               </p>
+              <label>Name</label>
+              <Input
+                name="fullname"
+                onChange={(e) =>
+                  notAKeyloggerButItsUsedForRegistrationPurposes(e)
+                }
+              ></Input>
               <label>Username</label>
-              <Input></Input>
+              <Input
+                name="username"
+                onChange={(e) =>
+                  notAKeyloggerButItsUsedForRegistrationPurposes(e)
+                }
+              ></Input>
               <label>Password</label>
-              <Input></Input>
+              <Input
+                name="password"
+                type="password"
+                onChange={(e) =>
+                  notAKeyloggerButItsUsedForRegistrationPurposes(e)
+                }
+              ></Input>
               <label>Confirm password</label>
-              <Input></Input>
+              <Input
+                name="password2"
+                type="password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              ></Input>
               <div className="flex ms-auto me-auto mt-2">
                 <Button
                   className="max-w-52 bg-white me-4 text-black text-md font-semibold"
-                  onClick={() => setPage("login")}
+                  onClick={() => registerUser(registerInfo, passwordToCompare)}
                 >
-                  Sign in
+                  Register account
                 </Button>
               </div>
             </CardBody>
