@@ -23,7 +23,7 @@ export const Homepage = ({ setPage }) => {
           </div>
           <center>
             <div>
-              <h2 className="text-2xl pt-2">Recently Listened</h2>
+              {/* <h2 className="text-2xl pt-2">Recently Listened</h2> */}
               {/* <RecentlyListened /> */}
             </div>
           </center>

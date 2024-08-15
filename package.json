@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kinde-oss/kinde-auth-react": "^4.0.2",
     "@nextui-org/card": "^2.0.33",
     "@nextui-org/react": "^2.4.6",
     "@types/spotify-web-playback-sdk": "^0.1.19",

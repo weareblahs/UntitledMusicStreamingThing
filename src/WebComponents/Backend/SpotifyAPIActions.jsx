@@ -91,3 +91,14 @@ export const GetRecentlyPlayed = async (q) => {
     .json();
   return data;
 };
+export const SearchTopArtist = async (q) => {
+  // 'https://api.spotify.com/v1/search?q=albname&type=album&limit=20'
+  const data = await ky
+    .get(`https://api.spotify.com/v1/search?q=${q}&type=artist&limit=1`, {
+      headers: {
+        Authorization: Cookies.get("spotifyAccessHeader"),
+      },
+    })
+    .json();
+  return data;
+};

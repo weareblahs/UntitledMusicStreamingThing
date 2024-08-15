@@ -18,16 +18,21 @@ import {
 import { useState } from "react";
 import { msToMS } from "../Backend/ExtraCode";
 import Cookies from "js-cookie";
-import { ViewAlbum } from "./ViewAlbum";
-
+import { SearchTopArtist } from "../Backend/SpotifyAPIActions";
 export const Search = ({ setPage }) => {
   const [sd, setsd] = useState([]);
   const SearchAll = async (q) => {
     const albumData = await SearchAlbum(q);
     const trackData = await SearchSongs(q);
-    setsd({ spotifyAlbum: albumData, spotifyTrack: trackData });
+    const topArtistData = await SearchTopArtist(q);
+    setsd({
+      spotifyAlbum: albumData,
+      spotifyTrack: trackData,
+      spotifyArtistTopMatch: topArtistData,
+    });
   };
   const DebouncedSearch = debounce((e) => SearchAll(e.target.value), 500);
+  console.log(sd);
   return (
     <>
       <div
@@ -43,7 +48,8 @@ export const Search = ({ setPage }) => {
           onChange={(e) => DebouncedSearch(e)}
         ></Input>
       </div>
-      {console.log(sd)}
+      {/* create top artist and more page */}
+
       {sd.spotifyAlbum ? (
         <>
           <div className="ms-auto me-auto" style={{ width: "80%" }}>

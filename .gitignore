@@ -25,3 +25,6 @@ dist-ssr
 
 # spotify client data
 src/WebComponents/Backend/spotifyClientData.jsx
+
+# kinde data
+src/WebComponents/Backend/KindeData.jsx
