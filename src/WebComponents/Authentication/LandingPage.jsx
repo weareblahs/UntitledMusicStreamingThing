@@ -10,7 +10,10 @@ import {
 } from "@nextui-org/react";
 import { FaSpotify } from "react-icons/fa";
 import { AuthURL } from "../Backend/AuthURLBuilder";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+
 export const LandingPage = () => {
+  const { login, register } = useKindeAuth();
   return (
     <div className="center-everything bg-black p-5">
       {" "}
@@ -20,15 +23,23 @@ export const LandingPage = () => {
             Untitled Music Streaming Thing
           </p>
           <p className="ms-auto me-auto text-center text-xl">
-            Sign in with your Spotify account to access online music.
+            Sign in with your own account. After this, you are able to listen to
+            online music, or manage your music.
           </p>
-          <Button
-            className="max-w-52 bg-green-500 mt-4 ms-auto me-auto text-md font-semibold"
-            onClick={() => (window.location.href = AuthURL())}
-          >
-            <FaSpotify />
-            Sign in with Spotify
-          </Button>
+          <div className="flex ms-auto me-auto mt-2">
+            <Button
+              className="max-w-52 bg-white me-4 text-black text-md font-semibold"
+              onClick={login}
+            >
+              Sign in
+            </Button>
+            <Button
+              className="max-w-52 bg-white text-black text-md font-semibold"
+              onClick={register}
+            >
+              Sign up
+            </Button>
+          </div>
         </CardBody>
         <p className="text-center mb-4">
           <i>
