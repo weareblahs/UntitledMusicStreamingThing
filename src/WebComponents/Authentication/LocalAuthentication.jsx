@@ -9,7 +9,15 @@ export const registerUser = async (data, comparePassword) => {
         json: data,
       })
       .json();
-    return res;
+    const uai = await ky
+      .post(`http://localhost:5000/users/register`, {
+        json: {
+          user: data.username,
+          linkedToSpotify: false,
+        },
+      })
+      .json();
+    return { registerData: res, permissionData: uai };
   } else {
     return "Password does not match";
   }

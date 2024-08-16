@@ -56,10 +56,11 @@ export const LandingPage = () => {
                 </Button>
               </div>
             </CardBody>
-            <p className="text-center mb-4">
+            <p className="text-center mb-4 px-5">
               <i>
                 Do note that a Spotify Premium account is required to access
-                full library.
+                full library. To link your Spotify Premium account, please go to
+                "Link Spotify account" after logging in.
               </i>
             </p>
           </Card>
@@ -87,6 +88,7 @@ export const LandingPage = () => {
               <label>Password</label>
               <Input
                 name="password"
+                type="password"
                 onChange={(e) => notAKeyloggerButItsUsedForLoginPurposes(e)}
               ></Input>
               <div className="flex ms-auto me-auto mt-2">
