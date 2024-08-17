@@ -10,7 +10,7 @@ export const registerUser = async (data, comparePassword) => {
       })
       .json();
     const uai = await ky
-      .post(`http://localhost:5000/users/register`, {
+      .post(`http://localhost:5000/userPermissions`, {
         json: {
           user: data.username,
           linkedToSpotify: false,
@@ -37,4 +37,16 @@ export const loginUser = async (data) => {
   } else {
     null;
   }
+};
+
+// check if account is linked to spotify
+// needs to get token via cookies
+export const linkedToSpotify = async () => {
+  const userToken = Cookies.get("userToken");
+  const res = await ky
+    .get(`http://localhost:5000/userPermissions`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+    .json();
+  console.log(res);
 };

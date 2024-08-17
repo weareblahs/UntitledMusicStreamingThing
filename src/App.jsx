@@ -13,11 +13,7 @@ function App() {
           <Route
             path="/"
             element={
-              Cookies.get("spotifyAccessHeader") ? (
-                <MainWindow />
-              ) : (
-                <LandingPage />
-              )
+              Cookies.get("userToken") ? <MainWindow /> : <LandingPage />
             }
           />
           <Route path="/loginAuth" element={<LoginMiddleware />} />

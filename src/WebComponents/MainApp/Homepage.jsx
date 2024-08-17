@@ -1,7 +1,10 @@
-import { FaSearch, FaBook } from "react-icons/fa";
+import { FaSearch, FaBook, FaSpotify } from "react-icons/fa";
+import { linkedToSpotify } from "../Authentication/LocalAuthentication";
+import { AuthURL } from "../Backend/AuthURLBuilder";
 // import { RecentlyListened } from "./HomeComponents/RecentlyListened";
 
 export const Homepage = ({ setPage }) => {
+  const lts = linkedToSpotify().linkedToSpotify;
   return (
     <>
       <div className="">
@@ -10,15 +13,21 @@ export const Homepage = ({ setPage }) => {
           <div className="ms-auto me-auto mt-2" style={{ width: "80%" }}>
             <div className="grid grid-cols-12 gap-4">
               <div
-                className="col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer flex "
+                className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
                 onClick={() => setPage("search")}
               >
-                <FaSearch className="me-4" /> Search library
+                <FaSearch />
+                Search library
               </div>
-              {/* <div className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer">
-                <FaBook />
-                View my library
-              </div> */}
+              {!lts ? (
+                <div
+                  className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                  onClick={() => (window.location.href = AuthURL())}
+                >
+                  <FaSpotify />
+                  Link to Spotify
+                </div>
+              ) : null}
             </div>
           </div>
           <center>
