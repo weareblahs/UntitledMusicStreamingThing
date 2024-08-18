@@ -13,7 +13,11 @@ import { FaAngleLeft, FaSpotify } from "react-icons/fa";
 import { AuthURL } from "../Backend/AuthURLBuilder";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import { loginUser, registerUser } from "./LocalAuthentication";
+import {
+  linkedToSpotify,
+  loginUser,
+  registerUser,
+} from "./LocalAuthentication";
 export const LandingPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState("landing");
