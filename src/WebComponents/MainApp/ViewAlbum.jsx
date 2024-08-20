@@ -36,7 +36,7 @@ export const ViewAlbum = ({ setPage }) => {
         <div className="ms-4 mt-auto mb-auto">
           <h1 className="text-6xl">{ad?.name}</h1>
           <h1 className="text-3xl">{ad?.artists?.[0].name}</h1>
-          <p>{`${ad?.label} / ${ad?.release_date}`}</p>
+          <p>{`${ad?.label} / ${ad?.release_date} / ${ad?.album_type}`}</p>
           <div className="pt-2">
             {!ad ? null : (
               <Button

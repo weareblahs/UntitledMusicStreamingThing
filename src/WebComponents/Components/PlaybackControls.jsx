@@ -42,12 +42,12 @@ const SpotifyPlayWindow = () => {
   const device = usePlayerDevice();
   const playbackState = usePlaybackState();
   const PlaybackSource = "Spotify";
-
   useEffect(() => {
     if (!device?.device_id) return undefined;
     Cookies.set("did", device?.device_id);
     ConnectToDevice(device?.device_id);
   }, [device]);
+
   if (!playbackState) return null;
   return (
     <>

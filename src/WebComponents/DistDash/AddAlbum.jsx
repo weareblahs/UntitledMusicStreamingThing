@@ -1,0 +1,73 @@
+import { FaPlus } from "react-icons/fa";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { useState } from "react";
+import { AddAlbumInformation } from "../Backend/DistributionDashboardActions";
+export const AddAlbumBtn = () => {
+  const [addAlbumWindow, toggleAddAlbumWindow] = useState(false);
+  const albumInfo = new FormData();
+  // change album info (onChange)
+  const changeAlbumInfo = (e) => {
+    albumInfo.set([e.target.name], e.target.value);
+  };
+  const changeAlbumArt = (e) => {
+    albumInfo.set("albumArt", e.target.files[0]);
+  };
+  const submitData = () => {
+    AddAlbumInformation(albumInfo);
+  };
+  if (addAlbumWindow) {
+    return (
+      <div style={{ maxWidth: "80%" }} className="ms-auto me-auto">
+        <h1 className="text-2xl">Add release</h1>
+        <div className="max-w-[800px] ms-auto me-auto">
+          <div className="col-span-6 block">
+            <label aria-label="albumName" onChange={(e) => changeAlbumInfo(e)}>
+              Release name
+            </label>
+            <Input
+              name="albumName"
+              onChange={(e) => changeAlbumInfo(e)}
+            ></Input>
+            <label aria-label="albumType">Release type</label>
+            <Select name="albumType" onChange={(e) => changeAlbumInfo(e)}>
+              <SelectItem key="album">Album</SelectItem>
+              <SelectItem key="compilation">Compilation</SelectItem>
+              <SelectItem key="EP">EP</SelectItem>
+              <SelectItem key="single">Single</SelectItem>
+            </Select>
+            <label aria-label="albumArt">Album artwork</label>
+            <Input
+              type="file"
+              name="albumArt"
+              onChange={(e) => changeAlbumArt(e)}
+              accept="image/jpg,image/jpeg,image/png"
+            ></Input>
+            <div className="mt-2 mb-2">
+              <Button
+                className="bg-green-500 text-black"
+                onClick={() => submitData()}
+              >
+                Proceed to next step
+              </Button>
+              <Button
+                className="bg-red-500 text-white ms-2"
+                onClick={() => {
+                  toggleAddAlbumWindow(false);
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <Button className="w-100" onClick={() => toggleAddAlbumWindow(true)}>
+        <FaPlus />
+        Add release
+      </Button>
+    );
+  }
+};

@@ -67,3 +67,13 @@ export const updateSpotifyLinkStatus = async (status) => {
     }
   }
 };
+
+export const userProps = async () => {
+  const userToken = Cookies.get("userToken");
+  const res = await ky
+    .get(`http://localhost:5000/users/userInfo`, {
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+    .json();
+  return res;
+};

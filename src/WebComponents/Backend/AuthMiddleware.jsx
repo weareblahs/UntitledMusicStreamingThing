@@ -27,4 +27,5 @@ export const LoginMiddleware = () => {
   );
   updateSpotifyLinkStatus("true");
   window.location.href = "/";
+  Cookies.set("setSpotifySession", true);
 };
