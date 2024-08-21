@@ -6,6 +6,7 @@ import { LoginMiddleware } from "./WebComponents/Backend/AuthMiddleware";
 import Cookies from "js-cookie";
 import { MainWindow } from "./WebComponents/MainApp/MainWindow";
 function App() {
+  let date = Date.now();
   return (
     <div id="root">
       <Router>
@@ -13,7 +14,17 @@ function App() {
           <Route
             path="/"
             element={
-              Cookies.get("userToken") ? <MainWindow /> : <LandingPage />
+              Cookies.get("userToken") ? (
+                Cookies.get("tokenExpiry") <
+                parseInt(String(date).substring(0, 10)) ? (
+                  <LandingPage />
+                ) : (
+                  // Cookies.remove("userToken")
+                  <MainWindow />
+                )
+              ) : (
+                <LandingPage />
+              )
             }
           />
           <Route path="/loginAuth" element={<LoginMiddleware />} />

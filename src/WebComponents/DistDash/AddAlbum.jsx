@@ -18,7 +18,7 @@ export const AddAlbumBtn = () => {
   if (addAlbumWindow) {
     return (
       <div style={{ maxWidth: "80%" }} className="ms-auto me-auto">
-        <h1 className="text-2xl">Add release</h1>
+        <h1 className="text-2xl text-center">Add release</h1>
         <div className="max-w-[800px] ms-auto me-auto">
           <div className="col-span-6 block">
             <label aria-label="albumName" onChange={(e) => changeAlbumInfo(e)}>
@@ -28,12 +28,27 @@ export const AddAlbumBtn = () => {
               name="albumName"
               onChange={(e) => changeAlbumInfo(e)}
             ></Input>
+            <label aria-label="artistName" onChange={(e) => changeAlbumInfo(e)}>
+              Main Artist Name
+            </label>
+            <Input
+              name="mainArtist"
+              onChange={(e) => changeAlbumInfo(e)}
+            ></Input>
             <label aria-label="albumType">Release type</label>
             <Select name="albumType" onChange={(e) => changeAlbumInfo(e)}>
-              <SelectItem key="album">Album</SelectItem>
-              <SelectItem key="compilation">Compilation</SelectItem>
-              <SelectItem key="EP">EP</SelectItem>
-              <SelectItem key="single">Single</SelectItem>
+              <SelectItem name="albumType" key="album">
+                Album
+              </SelectItem>
+              <SelectItem name="albumType" key="compilation">
+                Compilation
+              </SelectItem>
+              <SelectItem name="albumType" key="EP">
+                EP
+              </SelectItem>
+              <SelectItem name="albumType" key="single">
+                Single
+              </SelectItem>
             </Select>
             <label aria-label="albumArt">Album artwork</label>
             <Input

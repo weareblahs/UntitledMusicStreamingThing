@@ -19,7 +19,6 @@ export const ViewAlbum = ({ setPage }) => {
     }
     get();
   }, []);
-
   console.log(ad);
   return (
     <div className="ms-auto me-auto pb-40" style={{ width: "80%" }}>

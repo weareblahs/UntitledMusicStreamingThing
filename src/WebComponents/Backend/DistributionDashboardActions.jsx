@@ -12,3 +12,15 @@ export const AddAlbumInformation = async (body) => {
     .json();
   return res;
 };
+
+export const SDAP = async () => {
+  // endpoint: POST /albumManagement/addAlbumInfo
+  const res = await ky
+    .get("http://localhost:5000/albumManagement/sdap", {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("userToken")}`,
+      },
+    })
+    .json();
+  return res;
+};
