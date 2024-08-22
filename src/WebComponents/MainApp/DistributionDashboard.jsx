@@ -26,22 +26,20 @@ export const DistDash = ({ setPage }) => {
           </h1>
         </div>
         <div className="pt-3">
-          <AddAlbumBtn />
+          <AddAlbumBtn setPage={setPage} />
         </div>
       </div>
-      <div className="max-w-[1280px] ms-auto me-auto mt-4">
-        <div className="flex">
+      <div className="grid grid-cols-13 max-w-[1280px] ms-auto me-auto mt-4">
+        <div className="me-5 grid grid-cols-subgrid gap-4 col-span-4">
           {sdap.map((Album) => {
             const albumArt = `http://localhost:5000/img/${Album.albumArt}/400`;
             return (
-              <Card className="max-w-[200px] me-4">
+              <Card>
                 <CardBody>
                   <img src={albumArt}></img>
                   <h1 className="text-2xl">{Album.albumName}</h1>
                   <h1>
-                    {Album.albumMainArtist
-                      ? Album.albumMainArtist
-                      : "Unknown artist"}
+                    {Album.mainArtist ? Album.mainArtist : "Unknown artist"}
                   </h1>
                   <h1>{Album.albumType}</h1>
                 </CardBody>

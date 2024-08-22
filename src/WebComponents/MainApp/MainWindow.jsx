@@ -6,6 +6,8 @@ import { PlayWindow } from "../Components/PlaybackControls";
 import { Search } from "./Search";
 import { ViewAlbum } from "./ViewAlbum";
 import { DistDash } from "./DistributionDashboard";
+import { AddTrack } from "../DistDash/AddTrack";
+import { UploadTracks } from "../DistDash/UploadTracks";
 export const MainWindow = () => {
   const SpotifyTokenExpiry = Cookies.get("spotifyTokenExpiry");
   const [pageName, setPage] = useState("home");
@@ -19,6 +21,7 @@ export const MainWindow = () => {
         {pageName == "viewAlbum" ? <ViewAlbum setPage={setPage} /> : null}
         {pageName == "distPortal" ? <DistDash setPage={setPage} /> : null}
         {pageName != "distPortal" ? <PlayWindow /> : null}
+        {pageName == "addTrack" ? <AddTrack /> : null}
       </>
     );
   }

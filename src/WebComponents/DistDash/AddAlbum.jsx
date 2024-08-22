@@ -2,7 +2,8 @@ import { FaPlus } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 import { AddAlbumInformation } from "../Backend/DistributionDashboardActions";
-export const AddAlbumBtn = () => {
+import { AddTrack } from "./AddTrack";
+export const AddAlbumBtn = ({ setPage }) => {
   const [addAlbumWindow, toggleAddAlbumWindow] = useState(false);
   const albumInfo = new FormData();
   // change album info (onChange)
@@ -12,8 +13,10 @@ export const AddAlbumBtn = () => {
   const changeAlbumArt = (e) => {
     albumInfo.set("albumArt", e.target.files[0]);
   };
-  const submitData = () => {
-    AddAlbumInformation(albumInfo);
+  const submitData = async () => {
+    const info = await AddAlbumInformation(albumInfo);
+    localStorage.setItem("tempdistdashalbumid", info.album._id);
+    setPage("addTrack");
   };
   if (addAlbumWindow) {
     return (
@@ -60,7 +63,7 @@ export const AddAlbumBtn = () => {
             <div className="mt-2 mb-2">
               <Button
                 className="bg-green-500 text-black"
-                onClick={() => submitData()}
+                onClick={() => submitData({ setPage })}
               >
                 Proceed to next step
               </Button>

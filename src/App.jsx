@@ -5,6 +5,7 @@ import { LandingPage } from "./WebComponents/Authentication/LandingPage";
 import { LoginMiddleware } from "./WebComponents/Backend/AuthMiddleware";
 import Cookies from "js-cookie";
 import { MainWindow } from "./WebComponents/MainApp/MainWindow";
+import { UploadTracks } from "./WebComponents/DistDash/UploadTracks";
 function App() {
   let date = Date.now();
   return (
@@ -28,6 +29,11 @@ function App() {
             }
           />
           <Route path="/loginAuth" element={<LoginMiddleware />} />
+          {/* Distribution Dashboard */}
+          <Route
+            path="/DistDashEndpoint/uploadTracks"
+            element={<UploadTracks />}
+          />
         </Routes>
       </Router>
     </div>
