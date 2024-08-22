@@ -1,7 +1,7 @@
 import { FaAngleLeft, FaPlus } from "react-icons/fa";
 import { AddAlbumBtn } from "../DistDash/AddAlbum";
 import { Button, Card, CardBody } from "@nextui-org/react";
-import { SDAP } from "../Backend/DistributionDashboardActions";
+import { DeleteAlbum, SDAP } from "../Backend/DistributionDashboardActions";
 import { useEffect, useState } from "react";
 
 // DistroKid simulator (instant approval)
@@ -13,6 +13,12 @@ export const DistDash = ({ setPage }) => {
     });
   }, []);
   console.log(sdap);
+  const deleteAlbum = (albumID) => {
+    const deleteConfirmation = confirm(
+      "Are you sure you want to delete this album from the database?"
+    );
+    deleteConfirmation ? DeleteAlbum(albumID) : null;
+  };
   return (
     <>
       <div className="max-w-[1280px] ms-auto me-auto">
@@ -42,6 +48,14 @@ export const DistDash = ({ setPage }) => {
                     {Album.mainArtist ? Album.mainArtist : "Unknown artist"}
                   </h1>
                   <h1>{Album.albumType}</h1>
+                  <Button
+                    className="hover:bg-red-500"
+                    onClick={() => {
+                      deleteAlbum(Album._id);
+                    }}
+                  >
+                    Delete album
+                  </Button>
                 </CardBody>
               </Card>
             );

@@ -74,3 +74,13 @@ export const AddTracksToAlbum = async (albumID) => {
     .json();
   console.log(datapush);
 };
+export const DeleteAlbum = async (albumID) => {
+  const res = await ky
+    .delete(`http://localhost:5000/albumManagement/deleteAlbum/${albumID}`, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("userToken")}`,
+      },
+    })
+    .json();
+  return res.status ? res.status : res.error;
+};
