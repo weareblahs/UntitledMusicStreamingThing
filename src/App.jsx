@@ -6,6 +6,7 @@ import { LoginMiddleware } from "./WebComponents/Backend/AuthMiddleware";
 import Cookies from "js-cookie";
 import { MainWindow } from "./WebComponents/MainApp/MainWindow";
 import { UploadTracks } from "./WebComponents/DistDash/UploadTracks";
+import { MoreInformation } from "./WebComponents/DistDash/MoreInformation";
 function App() {
   let date = Date.now();
   return (
@@ -33,6 +34,10 @@ function App() {
           <Route
             path="/DistDashEndpoint/uploadTracks"
             element={<UploadTracks />}
+          />
+          <Route
+            path="/DistDashEndpoint/finalizeUpload"
+            element={<MoreInformation />}
           />
         </Routes>
       </Router>

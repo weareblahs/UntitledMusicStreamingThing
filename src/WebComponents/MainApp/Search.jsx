@@ -19,16 +19,21 @@ import { useState } from "react";
 import { msToMS } from "../Backend/ExtraCode";
 import Cookies from "js-cookie";
 import { SearchTopArtist } from "../Backend/SpotifyAPIActions";
+import { searchLocalAlbum, searchLocalTrack } from "../Backend/LocalSearch";
 export const Search = ({ setPage }) => {
   const [sd, setsd] = useState([]);
   const SearchAll = async (q) => {
     const albumData = await SearchAlbum(q);
     const trackData = await SearchSongs(q);
     const topArtistData = await SearchTopArtist(q);
+    const localAlbumData = await searchLocalAlbum(q);
+    const localTrackData = await searchLocalTrack(q);
     setsd({
       spotifyAlbum: albumData,
       spotifyTrack: trackData,
       spotifyArtistTopMatch: topArtistData,
+      localAlbum: localAlbumData,
+      localTrack: localTrackData,
     });
   };
   const DebouncedSearch = debounce((e) => SearchAll(e.target.value), 500);
@@ -58,6 +63,38 @@ export const Search = ({ setPage }) => {
             </div>
 
             <div className="overflow-x-scroll flex ms-auto me-auto pt-2 scrollbar-thin scrollbar-track-black scrollbar-corner-sky-500 scrollbar-thumb-slate-700">
+              {sd.localAlbum.map((Album) => {
+                return (
+                  <Card className="flex-shrink-0 me-4 max-w-[200px] cursor-pointer hover:bg-blue-600 transition fade-in-out">
+                    <CardBody
+                      onClick={() => {
+                        localStorage.setItem("tempalbumid", Album._id);
+                        setPage("viewLocalAlbum");
+                      }}
+                    >
+                      <img
+                        src={`http://localhost:5000/img/${Album.albumArt}/600`}
+                        width={200}
+                      />
+                      <div className="block">
+                        <h1 className="text-xl overflow-hidden truncate font-bold">
+                          {Album.albumName}
+                        </h1>
+                        <h4 className="overflow-hidden truncate">
+                          {Album.mainArtist}
+                        </h4>
+                        <h6>
+                          {Album?.releaseYear ? Album?.releaseYear : "-"}
+                          <Chip className="ms-2 bg-gray-800 text-white">
+                            UMST
+                          </Chip>
+                        </h6>
+                      </div>
+                    </CardBody>
+                  </Card>
+                );
+              })}
+              {/* spotify album */}
               {sd.spotifyAlbum.albums.items.map((Album) => {
                 return (
                   <Card className="flex-shrink-0 me-4 max-w-[200px] cursor-pointer hover:bg-blue-600 transition fade-in-out">

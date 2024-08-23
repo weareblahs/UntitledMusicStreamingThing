@@ -38,6 +38,14 @@ export const AddAlbumBtn = ({ setPage }) => {
               name="mainArtist"
               onChange={(e) => changeAlbumInfo(e)}
             ></Input>
+            <label aria-label="artistName" onChange={(e) => changeAlbumInfo(e)}>
+              Release Year
+            </label>
+            <Input
+              name="releaseYear"
+              type="number"
+              onChange={(e) => changeAlbumInfo(e)}
+            ></Input>
             <label aria-label="albumType">Release type</label>
             <Select name="albumType" onChange={(e) => changeAlbumInfo(e)}>
               <SelectItem name="albumType" key="album">

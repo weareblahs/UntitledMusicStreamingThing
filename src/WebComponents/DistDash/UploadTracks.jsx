@@ -102,12 +102,12 @@ export const UploadTracks = () => {
         </Card>
         <Button
           className="w-100"
-          onClick={() =>
+          onClick={() => {
             FinalizeUpload(
               uploader,
               localStorage.getItem("tempdistdashalbumid")
-            )
-          }
+            );
+          }}
         >
           Submit
         </Button>

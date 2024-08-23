@@ -82,7 +82,9 @@ export const DeleteAlbum = async (albumID) => {
       },
     })
     .json();
-  return res.status ? res.status : res.error;
+
+  res.status ? alert(res.status) : alert(res.error);
+  window.location.href = "/";
 };
 
 export const FinalizeUpload = async (body, aid) => {
@@ -95,5 +97,33 @@ export const FinalizeUpload = async (body, aid) => {
       },
     })
     .json();
-  return res;
+  window.location.href = "/DistDashEndpoint/finalizeUpload";
+};
+
+export const FinalProperties = async (
+  copyrightInfo,
+  availableStatus,
+  albumID
+) => {
+  // endpoints: POST /addCopyrightInfo/(id), /setAvailable/(id)/(true or false)
+  console.log(copyrightInfo, availableStatus, albumID);
+  const firstRes = await ky
+    .post(`http://localhost:5000/albumManagement/addCopyrightInfo/${albumID}`, {
+      json: copyrightInfo,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("userToken")}`,
+      },
+    })
+    .json();
+  const secondRes = await ky
+    .post(
+      `http://localhost:5000/albumManagement/setAvailable/${albumID}/${availableStatus}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+      }
+    )
+    .json();
+  window.location.href = "/";
 };
