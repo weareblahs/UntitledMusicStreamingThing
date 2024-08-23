@@ -1,5 +1,9 @@
 ![image](https://github.com/user-attachments/assets/26b26e5c-1cba-4de6-b215-41a78d320edc)
 
+# About this project
+
+This is a web player that plays from Spotify or your local sources (that can be uploaded to your local server via "Distribution Dashboard").
+
 # How to get started?
 
 ## 1. Set up the server.
@@ -23,7 +27,7 @@ This will install all required modules for UMST to run properly.
 npm install
 ```
 
-## 3. Start UMST and register a local account.
+## 4. Start UMST and register a local account.
 
 After you added all required modules, start the server.
 
@@ -39,6 +43,37 @@ http://localhost:5000
 
 Click on the "Sign up" button and follow the instructions.
 
-## 4. Link to your Spotify account.
+## 5. Link to your Spotify account.
 
 After logging in, click on "Link to Spotify" and follow the instructions to link to your Spotify account.
+
+# Known bugs
+
+- Sometimes the Spotify Web Playback SDK won't work. This can be resolved with sereval refreshes.
+- Progress bar for Spotify won't update until an action is made (example: pause, next, previous, etc.)
+
+# Credits (otherwise known as "What does this project use?")
+
+| Application / Component name                                                                  | Usage                                                                         |
+| --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [MongoDB](https://www.mongodb.com/)                                                           | Backend database                                                              |
+| [Express.js](https://expressjs.com/)                                                          | Backend API Controls                                                          |
+| [React](https://react.dev/)                                                                   | Frontend (app) code                                                           |
+| [Node.js](https://nodejs.org/en)                                                              | Frontend/backend base                                                         |
+| [NextUI](https://nextui.org/)                                                                 | User interface framework                                                      |
+| [Tailwind CSS](https://tailwindcss.com/)                                                      | Custom styling                                                                |
+| [react-spotify-web-playback-sdk](https://github.com/y-hiraoka/react-spotify-web-playback-sdk) | Spotify playback SDK wrapper for React that allows me to integrate efficently |
+| [ky](https://github.com/sindresorhus/ky)                                                      | Used for all fetch requests on the frontend                                   |
+| [tailwind-scrollbar](https://github.com/adoxography/tailwind-scrollbar)                       | Scrollbar for album search                                                    |
+| [react-seekbar](https://github.com/kangju2000/react-seekbar)                                  | Seekbar for playback component on frontend                                    |
+| [Font Awesome](https://github.com/FortAwesome/Font-Awesome)                                   | Icons. via [react-icons](https://github.com/react-icons/react-icons)          |
+| [Bootstrap Icons](https://github.com/twbs/icons)                                              | Icons. via [react-icons](https://github.com/react-icons/react-icons)          |
+| [Radio Canada Big via Google Fonts](https://fonts.google.com/specimen/Radio+Canada+Big)       | Main font used for frontend                                                   |
+| [Inconsolata via Google Fonts](https://fonts.google.com/specimen/Inconsolata)                 | Font used for track number and length                                         |
+| [js-cookie](https://github.com/js-cookie/js-cookie)                                           | Used for getting and setting cookies used in the current session              |
+| [react-router](https://github.com/remix-run/react-router) - frontend uses react-router-dom    | Used for routing to different components and pages                            |
+| [jwt-decode](https://github.com/auth0/jwt-decode)                                             | Used for decoding JWT-encoded tokens at the backend                           |
+| [JSON Web Tokens](https://jwt.io/)                                                            | Used for encoding user data into token                                        |
+| [debounce](https://github.com/sindresorhus/debounce)                                          | Used for delaying the search bar change state to prevent rate limits          |
+
+Some credits for code (such as Stack Overflow code) can be found under comments in the code.
