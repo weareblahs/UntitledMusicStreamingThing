@@ -84,3 +84,16 @@ export const DeleteAlbum = async (albumID) => {
     .json();
   return res.status ? res.status : res.error;
 };
+
+export const FinalizeUpload = async (body, aid) => {
+  // /AcceptUploadedFiles
+  const res = await ky
+    .post(`http://localhost:5000/albumManagement/AcceptUploadedFiles/${aid}`, {
+      body,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("userToken")}`,
+      },
+    })
+    .json();
+  return res;
+};

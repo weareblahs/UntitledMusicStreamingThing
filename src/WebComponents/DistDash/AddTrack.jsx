@@ -25,6 +25,7 @@ export const AddTrack = ({ setPage }) => {
   const [singleInfo, setSingleInfo] = useState([]);
   const [albumBasicInfo, setAlbumBasicInfo] = useState("Unknown");
   const [albID, setAlbID] = useState();
+  const [status, setStatus] = useState("");
   useEffect(() => {
     async function fetchData() {
       const data = await GetSingleAlbum(
@@ -59,9 +60,14 @@ export const AddTrack = ({ setPage }) => {
     });
     setTI(trackInfo);
     console.log(trackInfo);
+    setStatus("Adding track information...");
     AddTrackInfo(localStorage.getItem("tempdistdashalbumid"), trackInfo);
+    setStatus("Adding track information to album...");
     AddTracksToAlbum(albID);
-    window.location.href = "/DistDashEndpoint/uploadTracks";
+    setStatus("Please wait...");
+    setTimeout(() => {
+      window.location.href = "/DistDashEndpoint/uploadTracks";
+    }, 2000);
   };
 
   return (
@@ -76,12 +82,6 @@ export const AddTrack = ({ setPage }) => {
             type="number"
             onChange={(e) => setTrackCount(e.target.value)}
           ></Input>
-          <Button
-            className="ms-2 hover:bg-green-500 hover:text-black"
-            onClick={() => console.log(trackCount)}
-          >
-            Proceed with editing
-          </Button>
         </div>
       </div>
       <div>
@@ -120,6 +120,9 @@ export const AddTrack = ({ setPage }) => {
           >
             Next: Submit audio files for processing
           </Button>
+          <h1 className="text-center mt-2">
+            {status ? `Current status: ${status}` : null}
+          </h1>
         </div>
       </div>
     </>
