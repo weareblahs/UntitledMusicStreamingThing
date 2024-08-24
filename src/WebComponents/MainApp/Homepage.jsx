@@ -4,8 +4,9 @@ import { AuthURL } from "../Backend/AuthURLBuilder";
 import { useEffect, useState } from "react";
 // import { RecentlyListened } from "./HomeComponents/RecentlyListened";
 import { userProps } from "../Authentication/LocalAuthentication";
+import Cookies from "js-cookie";
 export const Homepage = ({ setPage }) => {
-  const lts = linkedToSpotify().linkedToSpotify;
+  const lts = Cookies.get("linkedToSpotify");
   const [distPermissions, setDP] = useState(false);
   useEffect(() => {
     userProps().then((data) => setDP(data.isAdmin));
@@ -13,9 +14,9 @@ export const Homepage = ({ setPage }) => {
   }, []);
   const [searchClass, setSC] = useState();
   useEffect(() => {
-    lts == false
+    lts
       ? setSC(
-          "col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+          "col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
         )
       : setSC(
           "col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
@@ -41,9 +42,9 @@ export const Homepage = ({ setPage }) => {
                   <FaSearch />
                   Search library
                 </div>
-                {lts == "false" ? (
+                {!lts ? (
                   <div
-                    className="col-span-6 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                    className="col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
                     onClick={() => (window.location.href = AuthURL())}
                   >
                     <FaSpotify />

@@ -129,7 +129,7 @@ export const Search = ({ setPage }) => {
             <div className="block pt-2 text-2xl">
               <h1>Songs</h1>
               <div className="row-span-12">
-                {sd.spotifyTrack.tracks.items.map((Track) => {
+                {sd.localTrack.map((Track) => {
                   return (
                     <>
                       <div
@@ -143,14 +143,17 @@ export const Search = ({ setPage }) => {
                             <FaPlay />
                           </div>
                           <div className="col-span-1 mt-auto mb-auto me-4">
-                            <img src={Track.album.images[2].url} width={40} />
+                            <img
+                              src={`http://localhost:5000/img/undefined/400`}
+                              width={40}
+                            />
                           </div>
                           <div className="block">
                             <div className="me-2 text-md mt-auto mb-auto">
                               {Track.trackName}
                               {
                                 /* explicit tag stuff */
-                                Track.explicit ? (
+                                Track?.explicit ? (
                                   <Chip className="rounded-md ms-2">E</Chip>
                                 ) : null
                               }

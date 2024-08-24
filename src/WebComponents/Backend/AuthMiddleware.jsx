@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { updateSpotifyLinkStatus } from "../Authentication/LocalAuthentication";
 function getQueryVariable(variable) {
   //url replace
   var query = window.location.href.split("/loginAuth#")[1];
@@ -25,7 +24,8 @@ export const LoginMiddleware = () => {
     "spotifyTokenExpiry",
     parseInt(Date.now()) + 1 * (60 * 60 * 1000)
   );
-  updateSpotifyLinkStatus("true");
-  window.location.href = "/";
+  Cookies.set("linkedToSpotify", true);
   Cookies.set("setSpotifySession", true);
+  Cookies.set("playbackSource", "spotify");
+  window.location.href = "/";
 };

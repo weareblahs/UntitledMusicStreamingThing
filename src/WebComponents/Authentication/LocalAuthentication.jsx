@@ -50,24 +50,6 @@ export const linkedToSpotify = async () => {
     .json();
 };
 
-export const updateSpotifyLinkStatus = async (status) => {
-  // example: updateSpotifyLinkStatus(true). "status" must be boolean
-  if (!status) {
-    return `no status`;
-  } else {
-    const res = await ky
-      .put(`http://localhost:5000/userPermissions/setlts/${status}`, {
-        headers: { Authorization: `Bearer ${Cookies.get("userToken")}` },
-      })
-      .json();
-    if (res.message) {
-      return `success`;
-    } else {
-      return `failed`;
-    }
-  }
-};
-
 export const userProps = async () => {
   const userToken = Cookies.get("userToken");
   const res = await ky

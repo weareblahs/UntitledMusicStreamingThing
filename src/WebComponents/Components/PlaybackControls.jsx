@@ -17,12 +17,15 @@ import {
 import { ConnectToDevice } from "../Backend/SpotifyAPIActions";
 import { Seekbar } from "react-seekbar";
 import { msToMS } from "../Backend/ExtraCode";
-import { ViewAlbum } from "../MainApp/ViewAlbum";
 export const PlayWindow = () => {
   const getOAuthToken = useCallback((callback) => {
     const token = Cookies.get("spotifyAccessToken");
     callback(token);
   }, []);
+  const [playbackSource, setSource] = useState(null);
+  setInterval(() => {
+    setSource(Cookies.get("playbackSource"));
+  }, 1000);
 
   return (
     <WebPlaybackSDK
@@ -31,9 +34,26 @@ export const PlayWindow = () => {
       volume={0.5}
       connectOnInitialized={true}
     >
-      <SpotifyPlayWindow />
+      {playbackSource != "spotify" ? (
+        <>
+          <div style={{ visibility: "hidden" }}>
+            <SpotifyPlayWindow style={{ visibility: "hidden" }} />
+          </div>
+          <h1>Test</h1>
+        </>
+      ) : (
+        <>
+          <div>
+            <SpotifyPlayWindow />
+          </div>
+          <div style={{ visibility: "hidden" }}>
+            <Test />
+          </div>
+        </>
+      )}
     </WebPlaybackSDK>
   );
+
   // <LocalPlayWindow/>
 };
 
@@ -141,10 +161,7 @@ const SpotifyPlayWindow = () => {
 };
 
 const LocalPlayWindow = () => {
-  const player = useSpotifyPlayer();
-  const device = usePlayerDevice();
-  const playbackState = usePlaybackState();
-  const PlaybackSource = "Spotify";
+  const PlaybackSource = "UMST";
   useEffect(() => {
     if (!device?.device_id) return undefined;
     Cookies.set("did", device?.device_id);
@@ -169,17 +186,17 @@ const LocalPlayWindow = () => {
               ></img>
               <div className="block ms-4">
                 <h6 className="text-xl">
-                  <b>{playbackState.track_window?.current_track?.name}</b>
+                  <b>{localStorage.get("localSongName")}</b>
                 </h6>
                 <h6 className="text-sm">
-                  {playbackState.track_window?.current_track?.artists?.[0].name}
+                  {localStorage.get("localSongArtist")}
                 </h6>
                 <h6 className="mt-1">
-                  <span className="text-xs bg-green-500 text-black p-1 rounded-full px-3">
+                  <span className="text-xs bg-gray-800 text-white p-1 rounded-full px-3">
                     {PlaybackSource}
                   </span>{" "}
-                  <span className="text-xs bg-green-500 text-black p-1 rounded-full px-3">
-                    {PlaybackSource == "Spotify" ? "AAC 256kbps" : null}
+                  <span className="text-xs bg-gray-800 text-white p-1 rounded-full px-3">
+                    {PlaybackSource == "UMST" ? "Hi-res FLAC" : null}
                   </span>
                 </h6>
               </div>
@@ -191,25 +208,23 @@ const LocalPlayWindow = () => {
             <center>
               <div>
                 <button
-                  onClick={() => player.previousTrack()}
+                  // onClick={() => player.previousTrack()}
                   className="text-white text-3xl ms-2 me-2 p-2 rounded-2xl "
                 >
                   <MdSkipPrevious className="transition fade-in-out hover:text-green-500" />
                 </button>
                 <button
-                  onClick={() => player.togglePlay()}
+                  // onClick={() => player.togglePlay()}
                   className="text-black bg-slate-200 transition fade-in-out hover:bg-green-500 motion-reduce:transition-none motion-reduce:hover:transform-none text-3xl ms-2 me-2 p-2 rounded-2xl"
                 >
                   {playbackState ? (
-                    playbackState?.paused ? (
-                      <MdPlayArrow className="transition fade-in-out hover:text-white" />
-                    ) : (
-                      <MdPause className="transition fade-in-out hover:text-white" />
-                    )
-                  ) : null}
+                    <MdPlayArrow className="transition fade-in-out hover:text-white" />
+                  ) : (
+                    <MdPause className="transition fade-in-out hover:text-white" />
+                  )}
                 </button>
                 <button
-                  onClick={() => player.nextTrack()}
+                  // onClick={() => player.nextTrack()}
                   className="text-white text-3xl ms-2 me-2 p-2 rounded-2xl"
                 >
                   <MdSkipNext className="transition fade-in-out hover:text-green-500" />
@@ -218,19 +233,19 @@ const LocalPlayWindow = () => {
             </center>
             <div className="d-flex ms-auto me-auto py-2">
               <div className="w-25 text-end me-4 py-0.5">
-                {msToMS(playbackState?.position)}
+                {/* {msToMS(playbackState?.position)} */}
               </div>
               <div className="py-1">
-                <Seekbar
+                {/* <Seekbar
                   position={playbackState?.position}
                   duration={playbackState?.duration}
                   onSeek={(position) => player.seek(position)}
                   className="w-96"
-                />
+                /> */}
               </div>
 
               <div className="w-25 text-start ms-4 py-0.5">
-                {msToMS(playbackState?.duration)}
+                {/* {msToMS(playbackState?.duration)} */}
               </div>
             </div>
           </div>
@@ -241,4 +256,7 @@ const LocalPlayWindow = () => {
       </div>
     </>
   );
+};
+const Test = () => {
+  return "Placeholder playback";
 };

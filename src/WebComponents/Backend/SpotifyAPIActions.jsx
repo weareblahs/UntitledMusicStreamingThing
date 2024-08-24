@@ -50,6 +50,7 @@ export const SearchSongs = async (q) => {
 };
 
 export const PlaySpotifyMusic = async (uri, did) => {
+  Cookies.set("playbackSource", "spotify");
   ky.put(`https://api.spotify.com/v1/me/player/play?device_id=${did}`, {
     json: {
       uris: [uri],
