@@ -4,7 +4,7 @@ import { FaAngleLeft, FaPlay } from "react-icons/fa";
 import { msToMS } from "../Backend/ExtraCode";
 import { GetLocalAlbum } from "../Backend/LocalSearch";
 import Cookies from "js-cookie";
-import { LocalPlayback } from "../Backend/LocalPlayback";
+import { LocalAlbumPlayback, LocalPlayback } from "../Backend/LocalPlayback";
 export const ViewLocalAlbum = ({ setPage }) => {
   const [ad, setad] = useState([]);
   const aid = localStorage.getItem("tempalbumid");
@@ -27,19 +27,19 @@ export const ViewLocalAlbum = ({ setPage }) => {
       <div className="ms-auto me-auto flex">
         <div className="max-w-[200px]">
           <img
-            src={`http://localhost:5000/img/${ad?.albumArt}/600`}
+            src={`http://localhost:5000/img/${ad?.search?.albumArt}/600`}
             style={{ height: "" }}
           />
         </div>
         <div className="ms-4 mt-auto mb-auto">
-          <h1 className="text-6xl">{ad?.albumName}</h1>
-          <h1 className="text-3xl">{ad?.mainArtist}</h1>
-          <p>{`${ad?.label} / ${
-            ad?.releaseYear ? ad?.releaseYear : "unknown year"
-          } / ${ad?.albumType}`}</p>
+          <h1 className="text-6xl">{ad?.search?.albumName}</h1>
+          <h1 className="text-3xl">{ad?.search?.mainArtist}</h1>
+          <p>{`${ad?.search?.label} / ${
+            ad?.search?.releaseYear ? ad?.search?.releaseYear : "unknown year"
+          } / ${ad?.search?.albumType}`}</p>
           <div className="pt-2">
             {!ad ? null : (
-              <Button>
+              <Button onClick={() => LocalAlbumPlayback(ad?.search?._id)}>
                 <FaPlay />
                 Play album
               </Button>

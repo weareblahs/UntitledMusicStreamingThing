@@ -18,6 +18,7 @@ import { ConnectToDevice } from "../Backend/SpotifyAPIActions";
 import { Seekbar } from "react-seekbar";
 import { msToMS, stoMS } from "../Backend/ExtraCode";
 import { useGlobalAudioPlayer } from "react-use-audio-player";
+import axios from "axios";
 export const PlayWindow = () => {
   const getOAuthToken = useCallback((callback) => {
     const token = Cookies.get("spotifyAccessToken");
@@ -183,10 +184,12 @@ const LocalPlayWindow = () => {
   const [song, index] = useState(0);
   const [url, setURL] = useState(["undefined"]);
   const [ndl, setNDL] = useState(0);
+  const [aid, setAID] = useState("");
   useEffect(() => {
     setURL(Cookies.get("localPlaylist").split("|"));
   }, []);
   setInterval(() => {
+    setAID(Cookies.get("localPlaybackAlbumID"));
     setTrack(Cookies.get("currentLocalTrack"));
     setTID(Cookies.get("localPlaybackLocation"));
     setLPS(Cookies.get("localPlaybackState"));
@@ -197,9 +200,21 @@ const LocalPlayWindow = () => {
   }, 1000);
   useEffect(() => {
     if (url) {
+      console.log(url);
       load(url[song], {
         autoplay: ps == "UMST" ? true : false,
-        onend: () => index(song + 1),
+        onend: () => {
+          index(song + 1);
+
+          axios
+            .get(`http://localhost:5000/search/singleTrack/${aid}/${song + 2}`)
+            .then((res) => {
+              console.log(res.data);
+              Cookies.set("currentLocalTrackName", res.data.trackName);
+              Cookies.set("currentLocalTrackArtist", res.data.trackArtist);
+              Cookies.set("currentLocalAlbumArt", res.data.relAlbumID.albumArt);
+            });
+        },
       });
     } else {
     }
@@ -251,7 +266,32 @@ const LocalPlayWindow = () => {
             <center>
               <div>
                 <button
-                  // onClick={() => player.previousTrack()}
+                  onClick={() => {
+                    if (song == 1) {
+                      null;
+                    } else {
+                      axios
+                        .get(
+                          `http://localhost:5000/search/singleTrack/${aid}/${song}`
+                        )
+                        .then((res) => {
+                          console.log(res.data);
+                          Cookies.set(
+                            "currentLocalTrackName",
+                            res.data.trackName
+                          );
+                          Cookies.set(
+                            "currentLocalTrackArtist",
+                            res.data.trackArtist
+                          );
+                          Cookies.set(
+                            "currentLocalAlbumArt",
+                            res.data.relAlbumID.albumArt
+                          );
+                        });
+                      index(song - 1);
+                    }
+                  }}
                   className="text-white text-3xl ms-2 me-2 p-2 rounded-2xl "
                 >
                   <MdSkipPrevious className="transition fade-in-out hover:text-green-500" />
@@ -273,7 +313,30 @@ const LocalPlayWindow = () => {
                   )}
                 </button>
                 <button
-                  // onClick={() => player.nextTrack()}
+                  onClick={() => {
+                    index(song + 1);
+                    axios
+                      .get(
+                        `http://localhost:5000/search/singleTrack/${aid}/${
+                          song + 2
+                        }`
+                      )
+                      .then((res) => {
+                        console.log(res.data);
+                        Cookies.set(
+                          "currentLocalTrackName",
+                          res.data.trackName
+                        );
+                        Cookies.set(
+                          "currentLocalTrackArtist",
+                          res.data.trackArtist
+                        );
+                        Cookies.set(
+                          "currentLocalAlbumArt",
+                          res.data.relAlbumID.albumArt
+                        );
+                      });
+                  }}
                   className="text-white text-3xl ms-2 me-2 p-2 rounded-2xl"
                 >
                   <MdSkipNext className="transition fade-in-out hover:text-green-500" />
