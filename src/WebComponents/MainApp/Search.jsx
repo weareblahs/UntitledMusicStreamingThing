@@ -147,6 +147,49 @@ export const Search = ({ setPage }) => {
                           </div>
                           <div className="block">
                             <div className="me-2 text-md mt-auto mb-auto">
+                              {Track.trackName}
+                              {
+                                /* explicit tag stuff */
+                                Track.explicit ? (
+                                  <Chip className="rounded-md ms-2">E</Chip>
+                                ) : null
+                              }
+                            </div>
+                            <div className="text-sm">{Track.trackArtist}</div>
+                          </div>
+                        </div>
+                        <div className="col-span-2 ms-auto text-sm mt-auto mb-auto text-center">
+                          <div className="block">
+                            {/* {msToMS(Track.duration_ms)} */}
+                            <br />
+                            <Chip className="text-xs bg-gray-800 text-white">
+                              UMST
+                            </Chip>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+                {/* spotify tracks */}
+                {sd.spotifyTrack.tracks.items.map((Track) => {
+                  return (
+                    <>
+                      <div
+                        className="flex hover:bg-slate-500 transition fade-in-out rounded-3xl px-4 py-2 cursor-pointer"
+                        onClick={() => {
+                          PlaySpotifyMusic(Track.uri, Cookies.get("did"));
+                        }}
+                      >
+                        <div className="flex transition fade-in-out col-span-10">
+                          <div className="col-span-1 text-xs mt-auto mb-auto me-4 text-md">
+                            <FaPlay />
+                          </div>
+                          <div className="col-span-1 mt-auto mb-auto me-4">
+                            <img src={Track.album.images[2].url} width={40} />
+                          </div>
+                          <div className="block">
+                            <div className="me-2 text-md mt-auto mb-auto">
                               {Track.name}
                               {
                                 /* explicit tag stuff */
