@@ -4,6 +4,7 @@ import { FaAngleLeft, FaPlay } from "react-icons/fa";
 import { msToMS } from "../Backend/ExtraCode";
 import { GetLocalAlbum } from "../Backend/LocalSearch";
 import Cookies from "js-cookie";
+import { LocalPlayback } from "../Backend/LocalPlayback";
 export const ViewLocalAlbum = ({ setPage }) => {
   const [ad, setad] = useState([]);
   const aid = localStorage.getItem("tempalbumid");
@@ -33,9 +34,9 @@ export const ViewLocalAlbum = ({ setPage }) => {
         <div className="ms-4 mt-auto mb-auto">
           <h1 className="text-6xl">{ad?.albumName}</h1>
           <h1 className="text-3xl">{ad?.mainArtist}</h1>
-          <p>{` ${ad?.releaseYear ? ad?.releaseYear : "unknown year"} / ${
-            ad?.albumType
-          }`}</p>
+          <p>{`${ad?.label} / ${
+            ad?.releaseYear ? ad?.releaseYear : "unknown year"
+          } / ${ad?.albumType}`}</p>
           <div className="pt-2">
             {!ad ? null : (
               <Button>
@@ -51,7 +52,10 @@ export const ViewLocalAlbum = ({ setPage }) => {
       <div className="ms-auto me-auto pt-2">
         {ad?.tracks?.map((Track) => {
           return (
-            <div className="grid grid-cols-12 mt-1 mb-1 px-3 py-2 rounded-2xl hover:bg-slate-800 cursor-pointer transition fade-in-out">
+            <div
+              className="grid grid-cols-12 mt-1 mb-1 px-3 py-2 rounded-2xl hover:bg-slate-800 cursor-pointer transition fade-in-out"
+              onClick={() => LocalPlayback(Track.relAlbumId, Track.trackNo)}
+            >
               <div className="col-span-1 text-md mt-auto me-2 mb-auto trackText">
                 {Track.trackNo.toString().length == 1 ? (
                   <span>&nbsp;{Track.trackNo}</span>
@@ -65,9 +69,7 @@ export const ViewLocalAlbum = ({ setPage }) => {
               <div className="ms-4 col-span-4 mt-auto mb-auto text-sm">
                 {Track.trackArtist}
               </div>
-              <div className="ms-4 col-span-1 mt-auto mb-auto text-sm text-end trackText">
-                {/* {msToMS(Track.duration_ms)} */}
-              </div>
+              <div className="ms-4 col-span-1 mt-auto mb-auto text-sm text-end trackText"></div>
             </div>
           );
         })}

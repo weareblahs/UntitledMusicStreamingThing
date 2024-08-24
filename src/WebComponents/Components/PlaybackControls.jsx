@@ -16,7 +16,8 @@ import {
 } from "react-icons/md";
 import { ConnectToDevice } from "../Backend/SpotifyAPIActions";
 import { Seekbar } from "react-seekbar";
-import { msToMS } from "../Backend/ExtraCode";
+import { msToMS, stoMS } from "../Backend/ExtraCode";
+import { useGlobalAudioPlayer } from "react-use-audio-player";
 export const PlayWindow = () => {
   const getOAuthToken = useCallback((callback) => {
     const token = Cookies.get("spotifyAccessToken");
@@ -39,7 +40,9 @@ export const PlayWindow = () => {
           <div style={{ visibility: "hidden" }}>
             <SpotifyPlayWindow style={{ visibility: "hidden" }} />
           </div>
-          <h1>Test</h1>
+          <div>
+            <LocalPlayWindow />
+          </div>
         </>
       ) : (
         <>
@@ -47,7 +50,7 @@ export const PlayWindow = () => {
             <SpotifyPlayWindow />
           </div>
           <div style={{ visibility: "hidden" }}>
-            <Test />
+            <LocalPlayWindow />
           </div>
         </>
       )}
@@ -62,11 +65,18 @@ const SpotifyPlayWindow = () => {
   const device = usePlayerDevice();
   const playbackState = usePlaybackState();
   const PlaybackSource = "Spotify";
+  const [sps, setSPS] = useState("Spotify");
   useEffect(() => {
     if (!device?.device_id) return undefined;
     Cookies.set("did", device?.device_id);
     ConnectToDevice(device?.device_id);
   }, [device]);
+  setInterval(() => {
+    setSPS(Cookies.get("playbackSource"));
+  }, 1000);
+  useEffect(() => {
+    sps == "Spotify" ? null : player.pause();
+  }, [sps]);
 
   if (!playbackState) return null;
   return (
@@ -162,15 +172,48 @@ const SpotifyPlayWindow = () => {
 
 const LocalPlayWindow = () => {
   const PlaybackSource = "UMST";
+  const { load, togglePlayPause, playing, getPosition, duration, seek, stop } =
+    useGlobalAudioPlayer();
+  const [trackList, setTrackList] = useState([]);
+  const [track, setTrack] = useState();
+  const [tid, setTID] = useState(""); // track id
+  const [lps, setLPS] = useState(false); // lost playback state? i forgot what did i just named
+  const [pm, setPM] = useState("single"); // playback mode
+  const [ps, setPS] = useState("UMST");
+  const [song, index] = useState(0);
+  const [url, setURL] = useState(["undefined"]);
+  const [ndl, setNDL] = useState(0);
   useEffect(() => {
-    if (!device?.device_id) return undefined;
-    Cookies.set("did", device?.device_id);
-    ConnectToDevice(device?.device_id);
-  }, [device]);
+    setURL(Cookies.get("localPlaylist").split("|"));
+  }, []);
+  setInterval(() => {
+    setTrack(Cookies.get("currentLocalTrack"));
+    setTID(Cookies.get("localPlaybackLocation"));
+    setLPS(Cookies.get("localPlaybackState"));
+    setPS(Cookies.get("playbackSource"));
+    setPM(Cookies.get("playbackMode"));
+    setURL(Cookies.get("localPlaylist").split("|"));
+    setNDL(Cookies.get("ndl"));
+  }, 1000);
+  useEffect(() => {
+    if (url) {
+      load(url[song], {
+        autoplay: ps == "UMST" ? true : false,
+        onend: () => index(song + 1),
+      });
+    } else {
+    }
+  }, [song, load, ndl, lps]);
 
-  if (!playbackState) return null;
+  useEffect(() => {
+    lps ? null : stop();
+  }, [lps]);
+  const [playbackState, setPlayback] = useState(true);
+
   return (
     <>
+      {/* <ReactHowler src={url} playing={playbackState} /> */}
+
       <div
         className="grid grid-cols-12 gap-4 ms-auto me-auto fixed-bottom mb-10  px-20 py-4 rounded-full bg-slate-500 bg-opacity-40 backdrop-filter backdrop-blur"
         style={{ width: "75%" }}
@@ -179,17 +222,17 @@ const LocalPlayWindow = () => {
           <div className="grid grid-cols-6">
             <div className="col-span-6 flex">
               <img
-                src={
-                  playbackState.track_window?.current_track?.album.images[0].url
-                }
+                src={`http://localhost:5000/img/${Cookies.get(
+                  "currentLocalAlbumArt"
+                )}/600`}
                 className="max-w-20 max-h-20 mt-auto mb-auto"
               ></img>
               <div className="block ms-4">
                 <h6 className="text-xl">
-                  <b>{localStorage.get("localSongName")}</b>
+                  <b>{Cookies.get("currentLocalTrackName")}</b>
                 </h6>
                 <h6 className="text-sm">
-                  {localStorage.get("localSongArtist")}
+                  {Cookies.get("currentLocalTrackArtist")}
                 </h6>
                 <h6 className="mt-1">
                   <span className="text-xs bg-gray-800 text-white p-1 rounded-full px-3">
@@ -217,10 +260,16 @@ const LocalPlayWindow = () => {
                   // onClick={() => player.togglePlay()}
                   className="text-black bg-slate-200 transition fade-in-out hover:bg-green-500 motion-reduce:transition-none motion-reduce:hover:transform-none text-3xl ms-2 me-2 p-2 rounded-2xl"
                 >
-                  {playbackState ? (
-                    <MdPlayArrow className="transition fade-in-out hover:text-white" />
+                  {playing ? (
+                    <MdPause
+                      className="transition fade-in-out hover:text-white"
+                      onClick={() => togglePlayPause()}
+                    />
                   ) : (
-                    <MdPause className="transition fade-in-out hover:text-white" />
+                    <MdPlayArrow
+                      className="transition fade-in-out hover:text-white"
+                      onClick={() => togglePlayPause()}
+                    />
                   )}
                 </button>
                 <button
@@ -233,19 +282,21 @@ const LocalPlayWindow = () => {
             </center>
             <div className="d-flex ms-auto me-auto py-2">
               <div className="w-25 text-end me-4 py-0.5">
-                {/* {msToMS(playbackState?.position)} */}
+                {stoMS(getPosition())}
               </div>
               <div className="py-1">
-                {/* <Seekbar
-                  position={playbackState?.position}
-                  duration={playbackState?.duration}
-                  onSeek={(position) => player.seek(position)}
+                <Seekbar
+                  position={getPosition()}
+                  duration={duration}
+                  onSeek={(position) => {
+                    seek(position);
+                  }}
                   className="w-96"
-                /> */}
+                />
               </div>
 
               <div className="w-25 text-start ms-4 py-0.5">
-                {/* {msToMS(playbackState?.duration)} */}
+                {stoMS(duration)}
               </div>
             </div>
           </div>

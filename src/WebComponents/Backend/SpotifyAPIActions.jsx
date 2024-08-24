@@ -51,6 +51,12 @@ export const SearchSongs = async (q) => {
 
 export const PlaySpotifyMusic = async (uri, did) => {
   Cookies.set("playbackSource", "spotify");
+  Cookies.set("localPlaybackState", false);
+  if (Cookies.get("ndl")) {
+    Cookies.set("ndl", parseInt(Cookies.get("ndl")) + 1);
+  } else {
+    Cookies.set("ndl", 1);
+  }
   ky.put(`https://api.spotify.com/v1/me/player/play?device_id=${did}`, {
     json: {
       uris: [uri],
@@ -61,6 +67,13 @@ export const PlaySpotifyMusic = async (uri, did) => {
   });
 };
 export const PlaySpotifyAlbum = async (uri, did) => {
+  Cookies.set("playbackSource", "spotify");
+  Cookies.set("localPlaybackState", false);
+  if (Cookies.get("ndl")) {
+    Cookies.set("ndl", parseInt(Cookies.get("ndl")) + 1);
+  } else {
+    Cookies.set("ndl", 1);
+  }
   ky.put(`https://api.spotify.com/v1/me/player/play?device_id=${did}`, {
     json: {
       context_uri: uri,

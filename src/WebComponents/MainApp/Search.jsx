@@ -20,6 +20,7 @@ import { msToMS } from "../Backend/ExtraCode";
 import Cookies from "js-cookie";
 import { SearchTopArtist } from "../Backend/SpotifyAPIActions";
 import { searchLocalAlbum, searchLocalTrack } from "../Backend/LocalSearch";
+import { LocalPlayback } from "../Backend/LocalPlayback";
 export const Search = ({ setPage }) => {
   const [sd, setsd] = useState([]);
   const SearchAll = async (q) => {
@@ -135,7 +136,7 @@ export const Search = ({ setPage }) => {
                       <div
                         className="flex hover:bg-slate-500 transition fade-in-out rounded-3xl px-4 py-2 cursor-pointer"
                         onClick={() => {
-                          PlaySpotifyMusic(Track.uri, Cookies.get("did"));
+                          LocalPlayback(Track.relAlbumId._id, Track.trackNo);
                         }}
                       >
                         <div className="flex transition fade-in-out col-span-10">
@@ -144,7 +145,11 @@ export const Search = ({ setPage }) => {
                           </div>
                           <div className="col-span-1 mt-auto mb-auto me-4">
                             <img
-                              src={`http://localhost:5000/img/undefined/400`}
+                              src={
+                                Track?.relAlbumId?.albumArt
+                                  ? `http://localhost:5000/img/${Track?.relAlbumId?.albumArt}/64`
+                                  : `http://localhost:5000/img/undefined/400`
+                              }
                               width={40}
                             />
                           </div>
