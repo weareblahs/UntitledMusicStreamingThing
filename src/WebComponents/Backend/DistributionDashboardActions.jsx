@@ -1,5 +1,7 @@
 import ky from "ky";
 import Cookies from "js-cookie";
+import axios from "axios";
+import { useState } from "react";
 export const AddAlbumInformation = async (body) => {
   // endpoint: POST /albumManagement/addAlbumInfo
   const res = await ky
@@ -126,4 +128,22 @@ export const FinalProperties = async (
     )
     .json();
   window.location.href = "/";
+};
+
+// /toggleAlbumAvailability/:id/:opts
+export const toggleAlbumAvailability = async (aid, opts) => {
+  const [aa, setAA] = useState(false);
+  axios
+    .get(
+      `http://localhost:5000/albumManagement/toggleAlbumAvailability/${aid}/${opts}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+      }
+    )
+    .then((res) => {
+      setAA(res.data);
+    });
+  console.log(aa);
 };

@@ -48,6 +48,8 @@ export const MoreInformation = () => {
               className={`${availableState ? "bg-green-500" : null}`}
               onClick={() => {
                 availableState ? setAS(false) : setAS(true);
+                setInfo({ ...info, availableState });
+                console.log(info);
               }}
             >
               {availableState

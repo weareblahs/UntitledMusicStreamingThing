@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { MainWindow } from "./WebComponents/MainApp/MainWindow";
 import { UploadTracks } from "./WebComponents/DistDash/UploadTracks";
 import { MoreInformation } from "./WebComponents/DistDash/MoreInformation";
+import { AddTrack } from "./WebComponents/DistDash/AddTrack";
 function App() {
   let date = Date.now();
   return (
@@ -39,6 +40,7 @@ function App() {
             path="/DistDashEndpoint/finalizeUpload"
             element={<MoreInformation />}
           />
+          <Route path="/DistDashEndpoint/addTrack" element={<AddTrack />} />
         </Routes>
       </Router>
     </div>

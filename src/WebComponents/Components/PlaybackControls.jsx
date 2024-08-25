@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-
 import {
   WebPlaybackSDK,
   usePlaybackState,
@@ -24,7 +23,7 @@ export const PlayWindow = () => {
     const token = Cookies.get("spotifyAccessToken");
     callback(token);
   }, []);
-  const [playbackSource, setSource] = useState(null);
+  const [playbackSource, setSource] = useState("");
   setInterval(() => {
     setSource(Cookies.get("playbackSource"));
   }, 1000);
@@ -75,7 +74,7 @@ const SpotifyPlayWindow = () => {
   setInterval(() => {
     Cookies.get("playbackSource")
       ? setSPS(Cookies.get("playbackSource"))
-      : Cookies.set("playbackSource", "spotify");
+      : null;
   }, 1000);
   useEffect(() => {
     sps == "Spotify" ? null : player?.pause();
@@ -174,9 +173,9 @@ const SpotifyPlayWindow = () => {
 };
 
 const LocalPlayWindow = () => {
-  const PlaybackSource = "UMST";
   const { load, togglePlayPause, playing, getPosition, duration, seek, stop } =
     useGlobalAudioPlayer();
+
   const [trackList, setTrackList] = useState([]);
   const [track, setTrack] = useState();
   const [tid, setTID] = useState(""); // track id
@@ -187,6 +186,7 @@ const LocalPlayWindow = () => {
   const [url, setURL] = useState(["undefined"]);
   const [ndl, setNDL] = useState(0);
   const [aid, setAID] = useState("");
+  const [isDD, setDD] = useState(false);
   useEffect(() => {
     Cookies.get("localPlaylist")
       ? setURL(Cookies.get("localPlaylist").split("|"))
@@ -211,6 +211,7 @@ const LocalPlayWindow = () => {
       ? setURL(Cookies.get("localPlaylist").split("|"))
       : null;
     Cookies.get("ndl") ? setNDL(Cookies.get("ndl")) : null;
+    Cookies.get("isDistDash") ? setDD(Cookies.get("isDistDash")) : null;
   }, 1000);
   useEffect(() => {
     if (url) {
@@ -233,12 +234,13 @@ const LocalPlayWindow = () => {
     } else {
     }
   }, [song, load, ndl, lps]);
-
+  useEffect(() => {
+    isDD ? stop() : null;
+  }, [isDD]);
   useEffect(() => {
     lps ? null : stop();
   }, [lps]);
   const [playbackState, setPlayback] = useState(true);
-
   return (
     <>
       {/* <ReactHowler src={url} playing={playbackState} /> */}
@@ -271,10 +273,10 @@ const LocalPlayWindow = () => {
                 </h6>
                 <h6 className="mt-1">
                   <span className="text-xs bg-gray-800 text-white p-1 rounded-full px-3">
-                    {PlaybackSource}
+                    UMST
                   </span>{" "}
                   <span className="text-xs bg-gray-800 text-white p-1 rounded-full px-3">
-                    {PlaybackSource == "UMST" ? "Hi-res FLAC" : null}
+                    Hi-res FLAC
                   </span>
                 </h6>
               </div>

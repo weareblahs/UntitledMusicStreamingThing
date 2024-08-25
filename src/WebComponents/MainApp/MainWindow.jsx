@@ -22,7 +22,6 @@ export const MainWindow = () => {
         {pageName == "viewAlbum" ? <ViewAlbum setPage={setPage} /> : null}
         {pageName == "distPortal" ? <DistDash setPage={setPage} /> : null}
         {pageName != "distPortal" ? <PlayWindow /> : null}
-        {pageName == "addTrack" ? <AddTrack /> : null}
         {pageName == "viewLocalAlbum" ? (
           <ViewLocalAlbum setPage={setPage} />
         ) : null}

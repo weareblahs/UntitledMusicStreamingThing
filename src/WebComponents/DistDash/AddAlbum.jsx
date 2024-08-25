@@ -16,7 +16,7 @@ export const AddAlbumBtn = ({ setPage }) => {
   const submitData = async () => {
     const info = await AddAlbumInformation(albumInfo);
     localStorage.setItem("tempdistdashalbumid", info.album._id);
-    setPage("addTrack");
+    window.location.href = "/DistDashEndpoint/addTrack";
   };
   if (addAlbumWindow) {
     return (

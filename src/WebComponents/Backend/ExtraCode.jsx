@@ -23,3 +23,6 @@ export const stoMS = (duration) => {
 
   return ret;
 };
+export const synonymOfBoolean = (bool) => {
+  return bool == true ? false : true;
+};
