@@ -36,7 +36,7 @@ export const PlayWindow = () => {
       volume={0.5}
       connectOnInitialized={true}
     >
-      {playbackSource != "spotify" ? (
+      {playbackSource == "UMST" ? (
         <>
           <div style={{ visibility: "hidden" }}>
             <SpotifyPlayWindow style={{ visibility: "hidden" }} />
@@ -73,10 +73,12 @@ const SpotifyPlayWindow = () => {
     ConnectToDevice(device?.device_id);
   }, [device]);
   setInterval(() => {
-    setSPS(Cookies.get("playbackSource"));
+    Cookies.get("playbackSource")
+      ? setSPS(Cookies.get("playbackSource"))
+      : Cookies.set("playbackSource", "spotify");
   }, 1000);
   useEffect(() => {
-    sps == "Spotify" ? null : player.pause();
+    sps == "Spotify" ? null : player?.pause();
   }, [sps]);
 
   if (!playbackState) return null;
@@ -186,17 +188,29 @@ const LocalPlayWindow = () => {
   const [ndl, setNDL] = useState(0);
   const [aid, setAID] = useState("");
   useEffect(() => {
-    setURL(Cookies.get("localPlaylist").split("|"));
+    Cookies.get("localPlaylist")
+      ? setURL(Cookies.get("localPlaylist").split("|"))
+      : null;
   }, []);
   setInterval(() => {
-    setAID(Cookies.get("localPlaybackAlbumID"));
-    setTrack(Cookies.get("currentLocalTrack"));
-    setTID(Cookies.get("localPlaybackLocation"));
-    setLPS(Cookies.get("localPlaybackState"));
-    setPS(Cookies.get("playbackSource"));
-    setPM(Cookies.get("playbackMode"));
-    setURL(Cookies.get("localPlaylist").split("|"));
-    setNDL(Cookies.get("ndl"));
+    Cookies.get("localPlaybackAlbumID")
+      ? setAID(Cookies.get("localPlaybackAlbumID"))
+      : null;
+    Cookies.get("currentLocalTrack")
+      ? setTrack(Cookies.get("currentLocalTrack"))
+      : null;
+    Cookies.get("localPlaybackLocation")
+      ? setTID(Cookies.get("localPlaybackLocation"))
+      : null;
+    Cookies.get("localPlaybackLocation")
+      ? setLPS(Cookies.get("localPlaybackLocation"))
+      : null;
+    Cookies.get("playbackSource") ? setPS(Cookies.get("playbackSource")) : null;
+    Cookies.get("playbackMode") ? setPM(Cookies.get("playbackMode")) : null;
+    Cookies.get("localPlaylist")
+      ? setURL(Cookies.get("localPlaylist").split("|"))
+      : null;
+    Cookies.get("ndl") ? setNDL(Cookies.get("ndl")) : null;
   }, 1000);
   useEffect(() => {
     if (url) {
@@ -244,10 +258,16 @@ const LocalPlayWindow = () => {
               ></img>
               <div className="block ms-4">
                 <h6 className="text-xl">
-                  <b>{Cookies.get("currentLocalTrackName")}</b>
+                  <b>
+                    {Cookies.get("currentLocalTrackName") != "undefined"
+                      ? Cookies.get("currentLocalTrackName")
+                      : " "}
+                  </b>
                 </h6>
                 <h6 className="text-sm">
-                  {Cookies.get("currentLocalTrackArtist")}
+                  {Cookies.get("currentLocalTrackArtist") != "undefined"
+                    ? Cookies.get("currentLocalTrackArtist")
+                    : " "}
                 </h6>
                 <h6 className="mt-1">
                   <span className="text-xs bg-gray-800 text-white p-1 rounded-full px-3">
@@ -268,14 +288,11 @@ const LocalPlayWindow = () => {
                 <button
                   onClick={() => {
                     if (song == 1) {
-                      null;
-                    } else {
                       axios
                         .get(
-                          `http://localhost:5000/search/singleTrack/${aid}/${song}`
+                          `http://localhost:5000/search/singleTrack/${aid}/1`
                         )
                         .then((res) => {
-                          console.log(res.data);
                           Cookies.set(
                             "currentLocalTrackName",
                             res.data.trackName
@@ -290,6 +307,31 @@ const LocalPlayWindow = () => {
                           );
                         });
                       index(song - 1);
+                    } else {
+                      if (song == 0) {
+                        null;
+                      } else {
+                        axios
+                          .get(
+                            `http://localhost:5000/search/singleTrack/${aid}/${song}`
+                          )
+                          .then((res) => {
+                            console.log(res.data);
+                            Cookies.set(
+                              "currentLocalTrackName",
+                              res.data.trackName
+                            );
+                            Cookies.set(
+                              "currentLocalTrackArtist",
+                              res.data.trackArtist
+                            );
+                            Cookies.set(
+                              "currentLocalAlbumArt",
+                              res.data.relAlbumID.albumArt
+                            );
+                          });
+                        index(song - 1);
+                      }
                     }
                   }}
                   className="text-white text-3xl ms-2 me-2 p-2 rounded-2xl "

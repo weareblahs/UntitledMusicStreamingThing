@@ -49,7 +49,15 @@ export const DistDash = ({ setPage }) => {
                   </h1>
                   <h1>{Album.albumType}</h1>
                   <Button
-                    className="hover:bg-red-500"
+                    className="hover:bg-red-500 w-50"
+                    onClick={() => {
+                      deleteAlbum(Album._id);
+                    }}
+                  >
+                    Delete album
+                  </Button>
+                  <Button
+                    className="hover:bg-red-500 w-50"
                     onClick={() => {
                       deleteAlbum(Album._id);
                     }}
