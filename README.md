@@ -9,6 +9,7 @@ This is a web player that plays from Spotify or your local sources (that can be 
 ## Before you start
 
 You are required to provide your Spotify Client ID and Client Secret for the app. See `src/WebComponents/Backend/SpotifyClientData.jsx.template` for details on how to set it up.
+Make sure that you have Node.js installed, as this will be used for the client itself.
 
 ## 1. Set up the server.
 
