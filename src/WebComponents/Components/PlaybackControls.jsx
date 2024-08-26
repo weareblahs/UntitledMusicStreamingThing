@@ -215,7 +215,6 @@ const LocalPlayWindow = () => {
   }, 1000);
   useEffect(() => {
     if (url) {
-      console.log(url);
       load(url[song], {
         autoplay: ps == "UMST" ? true : false,
         onend: () => {
@@ -224,7 +223,6 @@ const LocalPlayWindow = () => {
           axios
             .get(`http://localhost:5000/search/singleTrack/${aid}/${song + 2}`)
             .then((res) => {
-              console.log(res.data);
               Cookies.set("currentLocalTrackName", res.data.trackName);
               Cookies.set("currentLocalTrackArtist", res.data.trackArtist);
               Cookies.set("currentLocalAlbumArt", res.data.relAlbumID.albumArt);
@@ -358,28 +356,32 @@ const LocalPlayWindow = () => {
                 </button>
                 <button
                   onClick={() => {
-                    index(song + 1);
-                    axios
-                      .get(
-                        `http://localhost:5000/search/singleTrack/${aid}/${
-                          song + 2
-                        }`
-                      )
-                      .then((res) => {
-                        console.log(res.data);
-                        Cookies.set(
-                          "currentLocalTrackName",
-                          res.data.trackName
-                        );
-                        Cookies.set(
-                          "currentLocalTrackArtist",
-                          res.data.trackArtist
-                        );
-                        Cookies.set(
-                          "currentLocalAlbumArt",
-                          res.data.relAlbumID.albumArt
-                        );
-                      });
+                    if (url[song + 1] == "null") {
+                      null;
+                    } else {
+                      index(song + 1);
+                      axios
+                        .get(
+                          `http://localhost:5000/search/singleTrack/${aid}/${
+                            song + 2
+                          }`
+                        )
+                        .then((res) => {
+                          console.log(res.data);
+                          Cookies.set(
+                            "currentLocalTrackName",
+                            res.data.trackName
+                          );
+                          Cookies.set(
+                            "currentLocalTrackArtist",
+                            res.data.trackArtist
+                          );
+                          Cookies.set(
+                            "currentLocalAlbumArt",
+                            res.data.relAlbumID.albumArt
+                          );
+                        });
+                    }
                   }}
                   className="text-white text-3xl ms-2 me-2 p-2 rounded-2xl"
                 >

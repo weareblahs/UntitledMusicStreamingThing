@@ -6,6 +6,10 @@ This is a web player that plays from Spotify or your local sources (that can be 
 
 # How to get started?
 
+## Before you start
+
+You are required to provide your Spotify Client ID and Client Secret for the app. See `src/WebComponents/Backend/SpotifyClientData.jsx.template` for details on how to set it up.
+
 ## 1. Set up the server.
 
 The server is explicitly required for the usage of Untitled Music Streaming Thing, as it uses the server to log in. Host it locally on port 5000 for your own access. See [here](https://github.com/weareblahs/UMSTServer) for more details about the server.
@@ -82,3 +86,12 @@ After logging in, click on "Link to Spotify" and follow the instructions to link
 - Music icon for placeholder image via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Simple_Music.svg), uploaded by [Tokyoship](https://commons.wikimedia.org/wiki/User:Tokyoship).
 
 Some credits for code (such as Stack Overflow code) can be found under comments in the code.
+
+## More questions
+
+- How to make a user an administrator so that they can access the Distribution Portal, which is required to upload music to the platform?
+
+1. Encode `e92007c04006d555762093c6efa650fe` into Base64. You can use free tools to encode it, such as `https://base64encode.org`.
+2. Go to `http://localhost:5000/users/(BASE64_ENCODED_STRING)` on your browser, where the `BASE64_ENCODED_STRING` is the result from Step 1 (hint: starts with ZTky...)
+3. Get current user ID after logging in into Untitled Music Streaming Thing by opening up the console under Developer Tools. This will be used.
+4. Follow the instructions from the response given in Step 2.

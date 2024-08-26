@@ -2,6 +2,9 @@
 // a new app via Spotify Developers (developer.spotify.com). Please
 // make sure that the redirect URI is set to "http://localhost:5173/loginAuth"
 // and the APIs used are web playback SDK and web API
+//
+// Make sure to rename this file to "SpotifyClientData.jsx" after changing your
+// client ID and client secret 
 
 export const spotifyProperties = (property) => {
   if (property == "clientID") {

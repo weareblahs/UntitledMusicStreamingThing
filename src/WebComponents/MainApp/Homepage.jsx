@@ -17,7 +17,6 @@ export const Homepage = ({ setPage }) => {
   const [distPermissions, setDP] = useState(false);
   useEffect(() => {
     userProps().then((data) => setDP(data.isAdmin));
-    console.log(distPermissions);
   }, []);
   const [searchClass, setSC] = useState();
   useEffect(() => {
@@ -29,7 +28,7 @@ export const Homepage = ({ setPage }) => {
           "col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
         );
   }, []);
-  console.log(AuthURL());
+
   return (
     <>
       <div
@@ -42,8 +41,13 @@ export const Homepage = ({ setPage }) => {
       >
         <div className="ms-auto me-auto">
           <div>
-            <h1 className="font-bold text-6xl text-center mt-4 mb-4">
+            <h1 className="font-bold text-6xl text-center mt-20">
               Welcome,{" "}
+              {console.log(
+                `Your user ID is ${
+                  jwtDecode(Cookies.get("userToken")).data._id
+                }`
+              )}
               {jwtDecode(Cookies.get("userToken")).data.fullname.split(" ")[0]}.
             </h1>
             <div className="ms-auto me-auto mt-2" style={{ width: "80%" }}>
