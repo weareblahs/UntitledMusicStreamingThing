@@ -75,9 +75,9 @@ export const ViewLocalAlbum = ({ setPage }) => {
         })}
         {/* copyright text */}
         <div>
-          {ad?.copyright}
+          {ad?.search?.copyright}
           <br />
-          {ad?.phonoCopyright}
+          {ad?.search?.phonoCopyright}
         </div>
       </div>
     </div>
