@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { userProps } from "../Authentication/LocalAuthentication";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { SpotifyRecommendations } from "./SpotifyRecommendations";
 export const Homepage = ({ setPage }) => {
   const lts = Cookies.get("linkedToSpotify");
   const [distPermissions, setDP] = useState(false);
@@ -31,17 +32,10 @@ export const Homepage = ({ setPage }) => {
 
   return (
     <>
-      <div
-        className="flex"
-        style={{
-          height: "60vh",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="flex ">
         <div className="ms-auto me-auto">
           <div>
-            <h1 className="font-bold text-6xl text-center mt-20">
+            <h1 className="font-bold text-6xl text-center">
               Welcome,{" "}
               {console.log(
                 `Your user ID is ${
@@ -50,53 +44,53 @@ export const Homepage = ({ setPage }) => {
               )}
               {jwtDecode(Cookies.get("userToken")).data.fullname.split(" ")[0]}.
             </h1>
-            <div className="ms-auto me-auto mt-2" style={{ width: "80%" }}>
-              <div className="grid grid-cols-12 gap-4">
-                <div className={searchClass} onClick={() => setPage("search")}>
+            {!lts ? (
+              <center>
+                <div
+                  className="col-span-12 text-2xl mt-2 bg-blue-300 leading-7 w-96 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                  onClick={() => (window.location.href = AuthURL())}
+                >
+                  <FaSpotify />
+                  Link to Spotify
+                </div>
+              </center>
+            ) : null}
+            <div className="mb-2">
+              <div className="flex gap-8 ms-auto me-auto">
+                <div
+                  className="text-2xl mt-4 w-96 bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                  onClick={() => setPage("search")}
+                >
                   <FaSearch />
                   Search library
                 </div>
-                {!lts ? (
+
+                {distPermissions == true ? (
                   <div
-                    className="col-span-12 text-2xl bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
-                    onClick={() => (window.location.href = AuthURL())}
+                    className="col-span-6 text-2xl mt-4 bg-blue-300 leading-7 w-96 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                    onClick={() => setPage("distPortal")}
                   >
-                    <FaSpotify />
-                    Link to Spotify
+                    <FaCompactDisc />
+                    Dashboard
                   </div>
                 ) : null}
-                {distPermissions == "true" ? (
-                  <div
-                    className="col-span-6 text-2xl mt-4 bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
-                    onClick={() => (window.location.href = AuthURL())}
-                  >
-                    <FaSpotify />
-                    Link to Spotify
-                  </div>
-                ) : null}
-              </div>
-              {distPermissions == true ? (
                 <div
-                  className="col-span-6 text-2xl mt-4 bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
-                  onClick={() => setPage("distPortal")}
+                  className="col-span-6 text-2xl mt-4 bg-blue-300 leading-7 w-96 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
+                  onClick={() => {
+                    Cookies.remove("userToken");
+                    window.location.href = "/";
+                  }}
                 >
-                  <FaCompactDisc />
-                  Distribution Portal
+                  <FaSignOutAlt />
+                  Log out
                 </div>
-              ) : null}
-              <div
-                className="col-span-6 text-2xl mt-4 bg-blue-300 leading-7 text-black p-7 rounded-3xl hover:bg-green-600 transition fade-in-out cursor-pointer"
-                onClick={() => {
-                  Cookies.remove("userToken");
-                  window.location.href = "/";
-                }}
-              >
-                <FaSignOutAlt />
-                Log out
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="ms-auto me-auto mt-2" style={{ width: "77%" }}>
+        <SpotifyRecommendations setPage={setPage} />
       </div>
     </>
   );

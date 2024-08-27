@@ -43,7 +43,7 @@ export const LandingPage = () => {
               </p>
               <p className="ms-auto me-auto text-center text-xl">
                 Sign in with your own account. After this, you are able to
-                listen to online music, or manage your music.
+                listen to online music.
               </p>
               <div className="flex ms-auto me-auto mt-2">
                 <Button

@@ -6,6 +6,6 @@ export const AuthURL = () => {
   const responseType = "token";
   const redirectURL = "http://localhost:5173/loginAuth";
   const scopes =
-    "streaming app-remote-control user-read-email user-read-private user-modify-playback-state user-read-playback-state user-read-recently-played";
+    "streaming app-remote-control user-read-email user-read-private user-modify-playback-state user-read-playback-state user-read-recently-played user-library-read";
   return `${baseURL}?client_id=${clientID}&scope=${scopes}&redirect_uri=${redirectURL}&response_type=${responseType}`;
 };

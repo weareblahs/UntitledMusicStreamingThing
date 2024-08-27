@@ -9,6 +9,7 @@ import { DistDash } from "./DistributionDashboard";
 import { AddTrack } from "../DistDash/AddTrack";
 import { UploadTracks } from "../DistDash/UploadTracks";
 import { ViewLocalAlbum } from "./ViewLocalAlbum";
+import { ViewSpotifyLikedTracks } from "./ViewSpotifyLikedTracks";
 export const MainWindow = () => {
   const SpotifyTokenExpiry = Cookies.get("spotifyTokenExpiry");
   const [pageName, setPage] = useState("home");
@@ -24,6 +25,9 @@ export const MainWindow = () => {
         {pageName != "distPortal" ? <PlayWindow /> : null}
         {pageName == "viewLocalAlbum" ? (
           <ViewLocalAlbum setPage={setPage} />
+        ) : null}
+        {pageName == "viewSpotifyLikedTracks" ? (
+          <ViewSpotifyLikedTracks />
         ) : null}
       </>
     );
