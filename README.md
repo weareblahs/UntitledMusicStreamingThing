@@ -55,6 +55,7 @@ After logging in, click on "Link to Spotify" and follow the instructions to link
 # Known bugs
 
 - Sometimes the Spotify Web Playback SDK won't work. This can be resolved with sereval refreshes.
+  - This problem only happens when you run the app under local network (example: `localhost` and `127.0.0.1`). If you host this app in an online environment (example Vercel), the Spotify web player won't have any problems.
 - Progress bar for Spotify won't update until an action is made (example: pause, next, previous, etc.)
 
 # Credits (otherwise known as "What does this project use?")
