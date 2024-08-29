@@ -43,7 +43,7 @@ npm run dev
 Then, go to the following address:
 
 ```
-http://localhost:5000
+http://localhost:5173
 ```
 
 Click on the "Sign up" button and follow the instructions.
